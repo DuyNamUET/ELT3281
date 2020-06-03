@@ -1,0 +1,54 @@
+[p GLOBOPT AUTOSTATIC IEEE_DBL IEEE_FLT PIC14 PICREGULAR PICMID ]
+[d version 1.1 ]
+[d edition pro ]
+[d chip 16F877A ]
+[d frameptr 0 ]
+"10 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\sprcadd.c
+[v ___fladd __fladd `(d  1 e 4 0 ]
+"4 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\Umul8_16.c
+[v __Umul8_16 _Umul8_16 `(ui  1 e 2 0 ]
+"6 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\pic\__eeprom.c
+[v ___eecpymem __eecpymem `(v  1 e 1 0 ]
+"39
+[v ___memcpyee __memcpyee `(v  1 e 1 0 ]
+"37 D:\MicroProcessor\PIC\VXL.X\main.c
+[v _Lcd_CmdWrite Lcd_CmdWrite `(v  1 e 1 0 ]
+"50
+[v _Lcd_DataWrite Lcd_DataWrite `(v  1 e 1 0 ]
+"62
+[v _main main `(v  1 e 1 0 ]
+"216 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h
+[v _PORTB PORTB `VEuc  1 e 1 @6 ]
+"340
+[v _PORTD PORTD `VEuc  1 e 1 @8 ]
+"1375
+[v _TRISB TRISB `VEuc  1 e 1 @134 ]
+"1499
+[v _TRISD TRISD `VEuc  1 e 1 @136 ]
+"62 D:\MicroProcessor\PIC\VXL.X\main.c
+[v _main main `(v  1 e 1 0 ]
+{
+"64
+[v main@a a `[14]uc  1 a 14 0 ]
+[v main@i i `uc  1 a 1 14 ]
+[v main@F856 F856 `[14]uc  1 s 14 F856 ]
+"97
+} 0
+"50
+[v _Lcd_DataWrite Lcd_DataWrite `(v  1 e 1 0 ]
+{
+[v Lcd_DataWrite@data data `uc  1 a 1 wreg ]
+[v Lcd_DataWrite@data data `uc  1 a 1 wreg ]
+"52
+[v Lcd_DataWrite@data data `uc  1 a 1 2 ]
+"60
+} 0
+"37
+[v _Lcd_CmdWrite Lcd_CmdWrite `(v  1 e 1 0 ]
+{
+[v Lcd_CmdWrite@cmd cmd `uc  1 a 1 wreg ]
+[v Lcd_CmdWrite@cmd cmd `uc  1 a 1 wreg ]
+"39
+[v Lcd_CmdWrite@cmd cmd `uc  1 a 1 2 ]
+"47
+} 0
