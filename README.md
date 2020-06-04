@@ -9,3 +9,7 @@ A system can be developed for smart agriculture. A simple tasks of system is rea
 
 ## Structure
 Main code file is ```main.c``` and Proteus simulation is on ```VXL``` floder
+
+## Import .hex code to PIC on Proteus
+1. 
+2. 

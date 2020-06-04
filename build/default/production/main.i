@@ -1736,65 +1736,153 @@ extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
 # 20 "main.c" 2
-# 37 "main.c"
-void Lcd_CmdWrite(char cmd)
+# 40 "main.c"
+void LcdCmdWrite(char cmd)
 {
     PORTB = cmd;
     PORTD &= ~(1<<0);
     PORTD &= ~(1<<1);
     PORTD |= (1<<2);
-    _delay((unsigned long)((100)*(4000000/4000.0)));
+    _delay((unsigned long)((10)*(8000000/4000.0)));
     PORTD &= ~(1<<2);
-
-    _delay((unsigned long)((100)*(4000000/4000.0)));
 }
-
-
-void Lcd_DataWrite(char data)
+# 58 "main.c"
+void LcdDataWrite(char data)
 {
     PORTB = data;
     PORTD |= (1<<0);
     PORTD &= ~(1<<1);
     PORTD |= (1<<2);
-    _delay((unsigned long)((100)*(4000000/4000.0)));
+    _delay((unsigned long)((10)*(8000000/4000.0)));
     PORTD &= ~(1<<2);
-
-    _delay((unsigned long)((100)*(4000000/4000.0)));
 }
+
+void LcdPrint(char* message)
+{
+    for(char i = 0; message[i] != '\0'; i++)
+    {
+        LcdDataWrite(message[i]);
+    }
+}
+# 84 "main.c"
+char temp[] = "Temp = 00.0 C";
+char humi[] = "RH   = 00.0 %";
+unsigned char t_byte1, t_byte2, rh_byte1, rh_byte2, check_sum;
+short time_out;
+
+
+void startSignal()
+{
+    TRISD3 = 0;
+    RD3 = 0;
+
+    _delay((unsigned long)((25)*(8000000/4000.0)));
+    RD3 = 1;
+    _delay((unsigned long)((30)*(8000000/4000000.0)));
+    TRISD3 = 1;
+}
+
+
+__bit checkResponse()
+{
+    _delay((unsigned long)((40)*(8000000/4000000.0)));
+    if(!RD3)
+    {
+        _delay((unsigned long)((80)*(8000000/4000000.0)));
+        if(RD3)
+        {
+            _delay((unsigned long)((50)*(8000000/4000000.0)));
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
+__bit readData(unsigned char* dht_data)
+{
+    *dht_data = 0;
+
+    for(char i = 0; i < 8; i++)
+    {
+      TMR1H = 0;
+      TMR1L = 0;
+
+      while(!RD3)
+          if(TMR1L > 100) return 1;
+
+      TMR1H = 0;
+      TMR1L = 0;
+
+      while(RD3)
+          if(TMR1L > 100) return 1;
+
+      if(TMR1L > 50)
+         *dht_data |= (1 << (7 - i));
+    }
+    return 0;
+}
+
+
+
 
 void main(void)
 {
-    char i,a[]={"Good morning!"};
 
     TRISB = 0x00;
     TRISD = 0x00;
 
+    LcdCmdWrite(0x38);
+    LcdCmdWrite(0x0E);
 
-    Lcd_CmdWrite(0x38);
-    Lcd_CmdWrite(0x0E);
-    Lcd_CmdWrite(0x01);
-    Lcd_CmdWrite(0x80);
-
-
-    Lcd_DataWrite('H');
-    Lcd_DataWrite('e');
-    Lcd_DataWrite('l');
-    Lcd_DataWrite('l');
-    Lcd_DataWrite('o');
-    Lcd_DataWrite(' ');
-    Lcd_DataWrite('w');
-    Lcd_DataWrite('o');
-    Lcd_DataWrite('r');
-    Lcd_DataWrite('l');
-    Lcd_DataWrite('d');
-
-    Lcd_CmdWrite(0xc0);
-    for(i = 0; a[i] != 0; i++)
+    while(1)
     {
-        Lcd_DataWrite(a[i]);
+        startSignal();
+        if(checkResponse())
+        {
+
+            if(readData(&rh_byte1) || readData(&rh_byte2) || readData(&t_byte1)
+                    || readData(&t_byte2) || readData(&check_sum))
+            {
+                LcdCmdWrite(0x01);
+                LcdCmdWrite(0x80);
+                LcdPrint("Time out!");
+            }
+            else
+            {
+                if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
+                {
+                    temp[7] = t_byte1 / 10 + 48;
+                    temp[8] = t_byte1 % 10 + 48;
+                    temp[10] = t_byte2 / 10 + 48;
+
+                    humi[7] = rh_byte1 / 10 + 48;
+                    humi[8] = rh_byte1 % 10 + 48;
+                    humi[10] = rh_byte2 / 10 + 48;
+                    temp[11] = 223;
+
+                    LcdCmdWrite(0x80);
+                    LcdPrint(temp);
+
+                    LcdCmdWrite(0xC0);
+                    LcdPrint(humi);
+                }
+                else
+                {
+                    LcdCmdWrite(0x01);
+                    LcdCmdWrite(0x80);
+                    LcdPrint("Checksum Error!");
+                }
+
+            }
+        }
+        else
+        {
+            LcdCmdWrite(0x01);
+            LcdCmdWrite(0x80);
+            LcdPrint("No Response");
+        }
+        _delay((unsigned long)((1000)*(8000000/4000.0)));
     }
-
-    while(1);
-
     return;
 }

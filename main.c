@@ -19,8 +19,13 @@
 #include <pic16f877a.h>
 #include <xc.h>
 
-/* Configure the data bus and Control bus as per the hardware connection 
-   Dtatus bus is connected to PB0:PB7 and control bus PD0:PD2*/
+#define _XTAL_FREQ 8000000
+
+/*==========================*
+ *=          LCD           =*
+ *==========================*/
+// Configure the data bus and Control bus as per the hardware connection 
+// Dtatus bus is connected to PB0:PB7 and control bus PD0:PD2
 #define LcdDataBus PORTB
 #define LcdCtrlBus PORTD
 
@@ -31,67 +36,169 @@
 #define LCD_RW 1
 #define LCD_EN 2
 
-#define _XTAL_FREQ 4000000
-
-/* Function to send the command to LCD*/
-void Lcd_CmdWrite(char cmd)
+// Function to send the command to LCD
+void LcdCmdWrite(char cmd)
 {
-    LcdDataBus = cmd;               //Send the Command nibble
+    LcdDataBus = cmd;            // Send the Command nibble
     LcdCtrlBus &= ~(1<<LCD_RS);  // Send LOW pulse on RS pin for selecting Command register
     LcdCtrlBus &= ~(1<<LCD_RW);  // Send LOW pulse on RW pin for Write operation
     LcdCtrlBus |= (1<<LCD_EN);   // Generate a High-to-low pulse on EN pin
-    __delay_ms(100);
+    __delay_ms(10);
     LcdCtrlBus &= ~(1<<LCD_EN); 
-
-    __delay_ms(100);
 }
-
-/* Function to send the Data to LCD */
-void Lcd_DataWrite(char data)
+/* Command
+ * LcdCmdWrite(0x38);        // enable 5x7 mode for chars 
+ * LcdCmdWrite(0x0E);        // Display OFF, Cursor ON
+ * LcdCmdWrite(0x01);        // Clear Display
+ * LcdCmdWrite(0x80);        // First line
+ * LcdCmdWrite(0xC0);        // Second line
+*/
+ 
+// Function to send the Data to LCD 
+void LcdDataWrite(char data)
 {
-    LcdDataBus = data;              //Send the data on DataBus nibble
+    LcdDataBus = data;           // Send the data on DataBus nibble
     LcdCtrlBus |= (1<<LCD_RS);   // Send HIGH pulse on RS pin for selecting data register
     LcdCtrlBus &= ~(1<<LCD_RW);  // Send LOW pulse on RW pin for Write operation
     LcdCtrlBus |= (1<<LCD_EN);   // Generate a High-to-low pulse on EN pin
-    __delay_ms(100);
+    __delay_ms(10);
     LcdCtrlBus &= ~(1<<LCD_EN);
-
-    __delay_ms(100);
+}
+// Function to show message on LCD
+void LcdPrint(char* message)
+{
+    for(char i = 0; message[i] != '\0'; i++)
+    {
+        LcdDataWrite(message[i]);
+    }
 }
 
+/*==========================*
+ *=      DHT11 Sensor      =*
+ *==========================*/
+// Configure the data pin and Ctrl pin
+#define DhtDataPin RD3
+#define DhtDataDirnReg TRISD3
+
+// Variance
+char temp[] = "Temp = 00.0 C";
+char humi[] = "RH   = 00.0 %";
+unsigned char t_byte1, t_byte2, rh_byte1, rh_byte2, check_sum;
+short time_out;
+
+// Function to initialize sensor
+void startSignal()
+{
+    DhtDataDirnReg = 0;     // Configure connection pin as output
+    DhtDataPin = 0;         // Connection pin output is low
+    
+    __delay_ms(25);
+    DhtDataPin = 1;         // Connection pin output is high
+    __delay_us(30);
+    DhtDataDirnReg = 1;     // Configure connection pin as input
+}
+
+// Function to check response of sensor
+__bit checkResponse()
+{
+    __delay_us(40);
+    if(!DhtDataPin)
+    {
+        __delay_us(80);
+        if(DhtDataPin)
+        {
+            __delay_us(50);
+            return 1;
+        }
+    }
+    return 0;
+}
+
+// Function to read data from sensor
+__bit readData(unsigned char* dht_data)
+{
+    *dht_data = 0;
+
+    for(char i = 0; i < 8; i++)
+    {
+      TMR1H = 0;             // reset Timer1
+      TMR1L = 0;
+
+      while(!DhtDataPin)      // wait until DhtDataPIN becomes high
+          if(TMR1L > 100) return 1;
+
+      TMR1H = 0;             // reset Timer1
+      TMR1L = 0;
+
+      while(DhtDataPin)       // wait until DHT11_PIN becomes low
+          if(TMR1L > 100) return 1;
+
+      if(TMR1L > 50)                  // if high time > 50  ==>  Sensor sent 1
+         *dht_data |= (1 << (7 - i));  // set bit (7 - i)
+    }
+    return 0;                          // return 0 (data read OK)
+}
+
+/*==========================*
+ *=          Main          =*
+ *==========================*/
 void main(void)
 {
-    char i,a[]={"Good morning!"};
-
+    // LCD init
     LcdDataBusDirnReg = 0x00;  // Configure all the LCD pins as output
     LcdCtrlBusDirnReg = 0x00;  // Configure the Ctrl pins as output
 
-
-    Lcd_CmdWrite(0x38);        // enable 5x7 mode for chars 
-    Lcd_CmdWrite(0x0E);        // Display OFF, Cursor ON
-    Lcd_CmdWrite(0x01);        // Clear Display
-    Lcd_CmdWrite(0x80);        // Move the cursor to beginning of first line
-
-
-    Lcd_DataWrite('H');
-    Lcd_DataWrite('e');
-    Lcd_DataWrite('l');
-    Lcd_DataWrite('l');
-    Lcd_DataWrite('o');
-    Lcd_DataWrite(' ');
-    Lcd_DataWrite('w');
-    Lcd_DataWrite('o');
-    Lcd_DataWrite('r');
-    Lcd_DataWrite('l');
-    Lcd_DataWrite('d');
-
-    Lcd_CmdWrite(0xc0);        //Go to Next line and display Good Morning
-    for(i = 0; a[i] != 0; i++)
+    LcdCmdWrite(0x38);        // enable 5x7 mode for chars 
+    LcdCmdWrite(0x0E);        // Display OFF, Cursor ON
+    
+    while(1)
     {
-        Lcd_DataWrite(a[i]);
+        startSignal();
+        if(checkResponse())
+        {
+            // read (and save) data from the DHT11 sensor and check time out errors
+            if(readData(&rh_byte1) || readData(&rh_byte2) || readData(&t_byte1)
+                    || readData(&t_byte2) || readData(&check_sum))
+            {
+                LcdCmdWrite(0x01);        // Clear Display
+                LcdCmdWrite(0x80);        // First line
+                LcdPrint("Time out!");    // display "Time out!"
+            }
+            else
+            {
+                if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
+                {
+                    temp[7]  = t_byte1 / 10  + 48;
+                    temp[8]  = t_byte1 % 10  + 48;
+                    temp[10] = t_byte2 / 10  + 48;
+                    
+                    humi[7]  = rh_byte1 / 10 + 48;
+                    humi[8]  = rh_byte1 % 10 + 48;
+                    humi[10] = rh_byte2 / 10 + 48;
+                    temp[11] = 223;    // put degree symbol (°)
+                    
+                    LcdCmdWrite(0x80);        // First line
+                    LcdPrint(temp);
+                    
+                    LcdCmdWrite(0xC0);        // Second line
+                    LcdPrint(humi);
+                }
+                else
+                {
+                    LcdCmdWrite(0x01);        // Clear Display
+                    LcdCmdWrite(0x80);        // First line
+                    LcdPrint("Checksum Error!");
+                }
+
+            }
+        }
+        else
+        {
+            LcdCmdWrite(0x01);        // Clear Display
+            LcdCmdWrite(0x80);        // First line
+            LcdPrint("No Response");
+        }
+        __delay_ms(1000);
     }
-
-    while(1);
-
     return;
 }
