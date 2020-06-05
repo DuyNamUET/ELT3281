@@ -99,44 +99,28 @@ void startSignal()
 }
 
 // Function to check response of sensor
-__bit checkResponse()
+void checkResponse()
 {
-    __delay_us(40);
-    if(!DhtDataPin)
-    {
-        __delay_us(80);
-        if(DhtDataPin)
-        {
-            __delay_us(50);
-            return 1;
-        }
-    }
-    return 0;
+    while(DhtDataPin & 1);      /* wait till bus is high */     
+    while(!(DhtDataPin & 1));   /* wait till bus is low */
+    while(DhtDataPin & 1);      /* wait till bus is high */
 }
 
 // Function to read data from sensor
-__bit readData(unsigned char* dht_data)
+unsigned char readData()
 {
-    *dht_data = 0;
-
-    for(char i = 0; i < 8; i++)
+    char i,data = 0;  
+    for(i = 0; i < 8; i++)
     {
-      TMR1H = 0;             // reset Timer1
-      TMR1L = 0;
-
-      while(!DhtDataPin)      // wait until DhtDataPIN becomes high
-          if(TMR1L > 100) return 1;
-
-      TMR1H = 0;             // reset Timer1
-      TMR1L = 0;
-
-      while(DhtDataPin)       // wait until DHT11_PIN becomes low
-          if(TMR1L > 100) return 1;
-
-      if(TMR1L > 50)                  // if high time > 50  ==>  Sensor sent 1
-         *dht_data |= (1 << (7 - i));  // set bit (7 - i)
+        while(!(DhtDataPin & 1));  /* wait till 0 pulse, this is start of data pulse */
+        __delay_us(30);         
+        if(DhtDataPin & 1)  /* check whether data is 1 or 0 */    
+            data = ((data<<1) | 1); 
+        else
+            data = (data<<1);  
+        while(DhtDataPin & 1);
     }
-    return 0;                          // return 0 (data read OK)
+    return data;
 }
 
 /*==========================*
@@ -154,50 +138,38 @@ void main(void)
     while(1)
     {
         startSignal();
-        if(checkResponse())
+        checkResponse();
+        
+        rh_byte1 = readData();
+        rh_byte2 = readData();
+        t_byte1 = readData();
+        t_byte2 = readData();
+        check_sum = readData();
+        
+        if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
         {
-            // read (and save) data from the DHT11 sensor and check time out errors
-            if(readData(&rh_byte1) || readData(&rh_byte2) || readData(&t_byte1)
-                    || readData(&t_byte2) || readData(&check_sum))
-            {
-                LcdCmdWrite(0x01);        // Clear Display
-                LcdCmdWrite(0x80);        // First line
-                LcdPrint("Time out!");    // display "Time out!"
-            }
-            else
-            {
-                if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
-                {
-                    temp[7]  = t_byte1 / 10  + 48;
-                    temp[8]  = t_byte1 % 10  + 48;
-                    temp[10] = t_byte2 / 10  + 48;
-                    
-                    humi[7]  = rh_byte1 / 10 + 48;
-                    humi[8]  = rh_byte1 % 10 + 48;
-                    humi[10] = rh_byte2 / 10 + 48;
-                    temp[11] = 223;    // put degree symbol (°)
-                    
-                    LcdCmdWrite(0x80);        // First line
-                    LcdPrint(temp);
-                    
-                    LcdCmdWrite(0xC0);        // Second line
-                    LcdPrint(humi);
-                }
-                else
-                {
-                    LcdCmdWrite(0x01);        // Clear Display
-                    LcdCmdWrite(0x80);        // First line
-                    LcdPrint("Checksum Error!");
-                }
+            temp[7]  = t_byte1 / 10  + 48;
+            temp[8]  = t_byte1 % 10  + 48;
+            temp[10] = t_byte2 / 10  + 48;
 
-            }
+            humi[7]  = rh_byte1 / 10 + 48;
+            humi[8]  = rh_byte1 % 10 + 48;
+            humi[10] = rh_byte2 / 10 + 48;
+            temp[11] = 223;    // put degree symbol (°)
+
+            LcdCmdWrite(0x80);        // First line
+            LcdPrint(temp);
+
+            LcdCmdWrite(0xC0);        // Second line
+            LcdPrint(humi);
         }
         else
         {
             LcdCmdWrite(0x01);        // Clear Display
             LcdCmdWrite(0x80);        // First line
-            LcdPrint("No Response");
+            LcdPrint("Error");
         }
+        TMR1ON = 0;
         __delay_ms(1000);
     }
     return;

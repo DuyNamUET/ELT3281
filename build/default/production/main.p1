@@ -15,12 +15,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "2758
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 2758: extern volatile __bit RD3 __attribute__((address(0x43)));
 [v _RD3 `Vb ~T0 @X0 0 e@67 ]
-"648
-[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 648: extern volatile unsigned char TMR1H __attribute__((address(0x00F)));
-[v _TMR1H `Vuc ~T0 @X0 0 e@15 ]
-"641
-[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 641: extern volatile unsigned char TMR1L __attribute__((address(0x00E)));
-[v _TMR1L `Vuc ~T0 @X0 0 e@14 ]
 [p mainexit ]
 "1375
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 1375: extern volatile unsigned char TRISB __attribute__((address(0x086)));
@@ -28,6 +22,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 "1499
 [; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 1499: extern volatile unsigned char TRISD __attribute__((address(0x088)));
 [v _TRISD `Vuc ~T0 @X0 0 e@136 ]
+"2893
+[; ;C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h: 2893: extern volatile __bit TMR1ON __attribute__((address(0x80)));
+[v _TMR1ON `Vb ~T0 @X0 0 e@128 ]
 "9 main.c
 [p x FOSC = XT ]
 "10
@@ -415,311 +412,234 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e :UE 102 ]
 }
 "102
-[; ;main.c: 102: __bit checkResponse()
-[v _checkResponse `(b ~T0 @X0 1 ef ]
+[; ;main.c: 102: void checkResponse()
+[v _checkResponse `(v ~T0 @X0 1 ef ]
 "103
 [; ;main.c: 103: {
 {
 [e :U _checkResponse ]
 [f ]
 "104
-[; ;main.c: 104:     _delay((unsigned long)((40)*(8000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 40 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"105
-[; ;main.c: 105:     if(!RD3)
-[e $ ! ! _RD3 104  ]
-"106
-[; ;main.c: 106:     {
-{
-"107
-[; ;main.c: 107:         _delay((unsigned long)((80)*(8000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 80 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"108
-[; ;main.c: 108:         if(RD3)
-[e $ ! _RD3 105  ]
-"109
-[; ;main.c: 109:         {
-{
-"110
-[; ;main.c: 110:             _delay((unsigned long)((50)*(8000000/4000000.0)));
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
-"111
-[; ;main.c: 111:             return 1;
-[e ) -> -> 1 `i `b ]
-[e $UE 103  ]
-"112
-[; ;main.c: 112:         }
-}
+[; ;main.c: 104:     while(RD3 & 1);
+[e $U 104  ]
 [e :U 105 ]
-"113
-[; ;main.c: 113:     }
-}
 [e :U 104 ]
-"114
-[; ;main.c: 114:     return 0;
-[e ) -> -> 0 `i `b ]
-[e $UE 103  ]
-"115
-[; ;main.c: 115: }
-[e :UE 103 ]
-}
-"118
-[; ;main.c: 118: __bit readData(unsigned char* dht_data)
-[v _readData `(b ~T0 @X0 1 ef1`*uc ]
-"119
-[; ;main.c: 119: {
-{
-[e :U _readData ]
-"118
-[; ;main.c: 118: __bit readData(unsigned char* dht_data)
-[v _dht_data `*uc ~T0 @X0 1 r1 ]
-"119
-[; ;main.c: 119: {
-[f ]
-"120
-[; ;main.c: 120:     *dht_data = 0;
-[e = *U _dht_data -> -> 0 `i `uc ]
-"122
-[; ;main.c: 122:     for(char i = 0; i < 8; i++)
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 107  ]
-[e $U 108  ]
+[e $ != & -> _RD3 `i -> 1 `i -> 0 `i 105  ]
+[e :U 106 ]
+"105
+[; ;main.c: 105:     while(!(RD3 & 1));
+[e $U 107  ]
+[e :U 108 ]
 [e :U 107 ]
-"123
-[; ;main.c: 123:     {
-{
-"124
-[; ;main.c: 124:       TMR1H = 0;
-[e = _TMR1H -> -> 0 `i `uc ]
-"125
-[; ;main.c: 125:       TMR1L = 0;
-[e = _TMR1L -> -> 0 `i `uc ]
-"127
-[; ;main.c: 127:       while(!RD3)
+[e $ ! != & -> _RD3 `i -> 1 `i -> 0 `i 108  ]
+[e :U 109 ]
+"106
+[; ;main.c: 106:     while(RD3 & 1);
 [e $U 110  ]
 [e :U 111 ]
-"128
-[; ;main.c: 128:           if(TMR1L > 100) return 1;
-[e $ ! > -> _TMR1L `i -> 100 `i 113  ]
-[e ) -> -> 1 `i `b ]
-[e $UE 106  ]
-[e :U 113 ]
 [e :U 110 ]
-"127
-[; ;main.c: 127:       while(!RD3)
-[e $ ! _RD3 111  ]
+[e $ != & -> _RD3 `i -> 1 `i -> 0 `i 111  ]
 [e :U 112 ]
-"130
-[; ;main.c: 130:       TMR1H = 0;
-[e = _TMR1H -> -> 0 `i `uc ]
-"131
-[; ;main.c: 131:       TMR1L = 0;
-[e = _TMR1L -> -> 0 `i `uc ]
-"133
-[; ;main.c: 133:       while(RD3)
-[e $U 114  ]
-[e :U 115 ]
-"134
-[; ;main.c: 134:           if(TMR1L > 100) return 1;
-[e $ ! > -> _TMR1L `i -> 100 `i 117  ]
-[e ) -> -> 1 `i `b ]
-[e $UE 106  ]
-[e :U 117 ]
+"107
+[; ;main.c: 107: }
+[e :UE 103 ]
+}
+"110
+[; ;main.c: 110: unsigned char readData()
+[v _readData `(uc ~T0 @X0 1 ef ]
+"111
+[; ;main.c: 111: {
+{
+[e :U _readData ]
+[f ]
+"112
+[; ;main.c: 112:     char i,data = 0;
+[v _i `uc ~T0 @X0 1 a ]
+[v _data `uc ~T0 @X0 1 a ]
+[e = _data -> -> 0 `i `uc ]
+"113
+[; ;main.c: 113:     for(i = 0; i < 8; i++)
+{
+[e = _i -> -> 0 `i `uc ]
+[e $ < -> _i `i -> 8 `i 114  ]
+[e $U 115  ]
 [e :U 114 ]
-"133
-[; ;main.c: 133:       while(RD3)
-[e $ _RD3 115  ]
-[e :U 116 ]
-"136
-[; ;main.c: 136:       if(TMR1L > 50)
-[e $ ! > -> _TMR1L `i -> 50 `i 118  ]
-"137
-[; ;main.c: 137:          *dht_data |= (1 << (7 - i));
-[e =| *U _dht_data -> << -> 1 `i - -> 7 `i -> _i `i `uc ]
+"114
+[; ;main.c: 114:     {
+{
+"115
+[; ;main.c: 115:         while(!(RD3 & 1));
+[e $U 117  ]
 [e :U 118 ]
-"138
-[; ;main.c: 138:     }
+[e :U 117 ]
+[e $ ! != & -> _RD3 `i -> 1 `i -> 0 `i 118  ]
+[e :U 119 ]
+"116
+[; ;main.c: 116:         _delay((unsigned long)((30)*(8000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 30 `i `d / -> -> 8000000 `l `d .4000000.0 `ul ]
+"117
+[; ;main.c: 117:         if(RD3 & 1)
+[e $ ! != & -> _RD3 `i -> 1 `i -> 0 `i 120  ]
+"118
+[; ;main.c: 118:             data = ((data<<1) | 1);
+[e = _data -> | << -> _data `i -> 1 `i -> 1 `i `uc ]
+[e $U 121  ]
+"119
+[; ;main.c: 119:         else
+[e :U 120 ]
+"120
+[; ;main.c: 120:             data = (data<<1);
+[e = _data -> << -> _data `i -> 1 `i `uc ]
+[e :U 121 ]
+"121
+[; ;main.c: 121:         while(RD3 & 1);
+[e $U 122  ]
+[e :U 123 ]
+[e :U 122 ]
+[e $ != & -> _RD3 `i -> 1 `i -> 0 `i 123  ]
+[e :U 124 ]
+"122
+[; ;main.c: 122:     }
 }
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 107  ]
-[e :U 108 ]
+[e $ < -> _i `i -> 8 `i 114  ]
+[e :U 115 ]
 }
-"139
-[; ;main.c: 139:     return 0;
-[e ) -> -> 0 `i `b ]
-[e $UE 106  ]
-"140
-[; ;main.c: 140: }
-[e :UE 106 ]
+"123
+[; ;main.c: 123:     return data;
+[e ) -> _data `uc ]
+[e $UE 113  ]
+"124
+[; ;main.c: 124: }
+[e :UE 113 ]
 }
 [v $root$_main `(v ~T0 @X0 0 e ]
-"145
-[; ;main.c: 145: void main(void)
+"129
+[; ;main.c: 129: void main(void)
 [v _main `(v ~T0 @X0 1 ef ]
-"146
-[; ;main.c: 146: {
+"130
+[; ;main.c: 130: {
 {
 [e :U _main ]
 [f ]
-"148
-[; ;main.c: 148:     TRISB = 0x00;
+"132
+[; ;main.c: 132:     TRISB = 0x00;
 [e = _TRISB -> -> 0 `i `uc ]
-"149
-[; ;main.c: 149:     TRISD = 0x00;
+"133
+[; ;main.c: 133:     TRISD = 0x00;
 [e = _TRISD -> -> 0 `i `uc ]
-"151
-[; ;main.c: 151:     LcdCmdWrite(0x38);
+"135
+[; ;main.c: 135:     LcdCmdWrite(0x38);
 [e ( _LcdCmdWrite (1 -> -> 56 `i `uc ]
-"152
-[; ;main.c: 152:     LcdCmdWrite(0x0E);
+"136
+[; ;main.c: 136:     LcdCmdWrite(0x0E);
 [e ( _LcdCmdWrite (1 -> -> 14 `i `uc ]
-"154
-[; ;main.c: 154:     while(1)
-[e :U 121 ]
-"155
-[; ;main.c: 155:     {
-{
-"156
-[; ;main.c: 156:         startSignal();
-[e ( _startSignal ..  ]
-"157
-[; ;main.c: 157:         if(checkResponse())
-[e $ ! ( _checkResponse ..  123  ]
-"158
-[; ;main.c: 158:         {
-{
-"160
-[; ;main.c: 160:             if(readData(&rh_byte1) || readData(&rh_byte2) || readData(&t_byte1)
-[e $ ! || || || || ( _readData (1 &U _rh_byte1 ( _readData (1 &U _rh_byte2 ( _readData (1 &U _t_byte1 ( _readData (1 &U _t_byte2 ( _readData (1 &U _check_sum 124  ]
-"162
-[; ;main.c: 162:             {
-{
-"163
-[; ;main.c: 163:                 LcdCmdWrite(0x01);
-[e ( _LcdCmdWrite (1 -> -> 1 `i `uc ]
-"164
-[; ;main.c: 164:                 LcdCmdWrite(0x80);
-[e ( _LcdCmdWrite (1 -> -> 128 `i `uc ]
-"165
-[; ;main.c: 165:                 LcdPrint("Time out!");
-[e ( _LcdPrint (1 :s 1C ]
-"166
-[; ;main.c: 166:             }
-}
-[e $U 125  ]
-"167
-[; ;main.c: 167:             else
-[e :U 124 ]
-"168
-[; ;main.c: 168:             {
-{
-"169
-[; ;main.c: 169:                 if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
-[e $ ! == -> _check_sum `i & + + + -> _rh_byte1 `i -> _rh_byte2 `i -> _t_byte1 `i -> _t_byte2 `i -> 255 `i 126  ]
-"170
-[; ;main.c: 170:                 {
-{
-"171
-[; ;main.c: 171:                     temp[7] = t_byte1 / 10 + 48;
-[e = *U + &U _temp * -> -> -> 7 `i `ui `ux -> -> # *U &U _temp `ui `ux -> + / -> _t_byte1 `i -> 10 `i -> 48 `i `uc ]
-"172
-[; ;main.c: 172:                     temp[8] = t_byte1 % 10 + 48;
-[e = *U + &U _temp * -> -> -> 8 `i `ui `ux -> -> # *U &U _temp `ui `ux -> + % -> _t_byte1 `i -> 10 `i -> 48 `i `uc ]
-"173
-[; ;main.c: 173:                     temp[10] = t_byte2 / 10 + 48;
-[e = *U + &U _temp * -> -> -> 10 `i `ui `ux -> -> # *U &U _temp `ui `ux -> + / -> _t_byte2 `i -> 10 `i -> 48 `i `uc ]
-"175
-[; ;main.c: 175:                     humi[7] = rh_byte1 / 10 + 48;
-[e = *U + &U _humi * -> -> -> 7 `i `ui `ux -> -> # *U &U _humi `ui `ux -> + / -> _rh_byte1 `i -> 10 `i -> 48 `i `uc ]
-"176
-[; ;main.c: 176:                     humi[8] = rh_byte1 % 10 + 48;
-[e = *U + &U _humi * -> -> -> 8 `i `ui `ux -> -> # *U &U _humi `ui `ux -> + % -> _rh_byte1 `i -> 10 `i -> 48 `i `uc ]
-"177
-[; ;main.c: 177:                     humi[10] = rh_byte2 / 10 + 48;
-[e = *U + &U _humi * -> -> -> 10 `i `ui `ux -> -> # *U &U _humi `ui `ux -> + / -> _rh_byte2 `i -> 10 `i -> 48 `i `uc ]
-"178
-[; ;main.c: 178:                     temp[11] = 223;
-[e = *U + &U _temp * -> -> -> 11 `i `ui `ux -> -> # *U &U _temp `ui `ux -> -> 223 `i `uc ]
-"180
-[; ;main.c: 180:                     LcdCmdWrite(0x80);
-[e ( _LcdCmdWrite (1 -> -> 128 `i `uc ]
-"181
-[; ;main.c: 181:                     LcdPrint(temp);
-[e ( _LcdPrint (1 &U _temp ]
-"183
-[; ;main.c: 183:                     LcdCmdWrite(0xC0);
-[e ( _LcdCmdWrite (1 -> -> 192 `i `uc ]
-"184
-[; ;main.c: 184:                     LcdPrint(humi);
-[e ( _LcdPrint (1 &U _humi ]
-"185
-[; ;main.c: 185:                 }
-}
-[e $U 127  ]
-"186
-[; ;main.c: 186:                 else
-[e :U 126 ]
-"187
-[; ;main.c: 187:                 {
-{
-"188
-[; ;main.c: 188:                     LcdCmdWrite(0x01);
-[e ( _LcdCmdWrite (1 -> -> 1 `i `uc ]
-"189
-[; ;main.c: 189:                     LcdCmdWrite(0x80);
-[e ( _LcdCmdWrite (1 -> -> 128 `i `uc ]
-"190
-[; ;main.c: 190:                     LcdPrint("Checksum Error!");
-[e ( _LcdPrint (1 :s 2C ]
-"191
-[; ;main.c: 191:                 }
-}
+"138
+[; ;main.c: 138:     while(1)
 [e :U 127 ]
-"193
-[; ;main.c: 193:             }
-}
-[e :U 125 ]
-"194
-[; ;main.c: 194:         }
-}
-[e $U 128  ]
-"195
-[; ;main.c: 195:         else
-[e :U 123 ]
-"196
-[; ;main.c: 196:         {
+"139
+[; ;main.c: 139:     {
 {
-"197
-[; ;main.c: 197:             LcdCmdWrite(0x01);
-[e ( _LcdCmdWrite (1 -> -> 1 `i `uc ]
-"198
-[; ;main.c: 198:             LcdCmdWrite(0x80);
+"140
+[; ;main.c: 140:         startSignal();
+[e ( _startSignal ..  ]
+"141
+[; ;main.c: 141:         checkResponse();
+[e ( _checkResponse ..  ]
+"143
+[; ;main.c: 143:         rh_byte1 = readData();
+[e = _rh_byte1 ( _readData ..  ]
+"144
+[; ;main.c: 144:         rh_byte2 = readData();
+[e = _rh_byte2 ( _readData ..  ]
+"145
+[; ;main.c: 145:         t_byte1 = readData();
+[e = _t_byte1 ( _readData ..  ]
+"146
+[; ;main.c: 146:         t_byte2 = readData();
+[e = _t_byte2 ( _readData ..  ]
+"147
+[; ;main.c: 147:         check_sum = readData();
+[e = _check_sum ( _readData ..  ]
+"149
+[; ;main.c: 149:         if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
+[e $ ! == -> _check_sum `i & + + + -> _rh_byte1 `i -> _rh_byte2 `i -> _t_byte1 `i -> _t_byte2 `i -> 255 `i 129  ]
+"150
+[; ;main.c: 150:         {
+{
+"151
+[; ;main.c: 151:             temp[7] = t_byte1 / 10 + 48;
+[e = *U + &U _temp * -> -> -> 7 `i `ui `ux -> -> # *U &U _temp `ui `ux -> + / -> _t_byte1 `i -> 10 `i -> 48 `i `uc ]
+"152
+[; ;main.c: 152:             temp[8] = t_byte1 % 10 + 48;
+[e = *U + &U _temp * -> -> -> 8 `i `ui `ux -> -> # *U &U _temp `ui `ux -> + % -> _t_byte1 `i -> 10 `i -> 48 `i `uc ]
+"153
+[; ;main.c: 153:             temp[10] = t_byte2 / 10 + 48;
+[e = *U + &U _temp * -> -> -> 10 `i `ui `ux -> -> # *U &U _temp `ui `ux -> + / -> _t_byte2 `i -> 10 `i -> 48 `i `uc ]
+"155
+[; ;main.c: 155:             humi[7] = rh_byte1 / 10 + 48;
+[e = *U + &U _humi * -> -> -> 7 `i `ui `ux -> -> # *U &U _humi `ui `ux -> + / -> _rh_byte1 `i -> 10 `i -> 48 `i `uc ]
+"156
+[; ;main.c: 156:             humi[8] = rh_byte1 % 10 + 48;
+[e = *U + &U _humi * -> -> -> 8 `i `ui `ux -> -> # *U &U _humi `ui `ux -> + % -> _rh_byte1 `i -> 10 `i -> 48 `i `uc ]
+"157
+[; ;main.c: 157:             humi[10] = rh_byte2 / 10 + 48;
+[e = *U + &U _humi * -> -> -> 10 `i `ui `ux -> -> # *U &U _humi `ui `ux -> + / -> _rh_byte2 `i -> 10 `i -> 48 `i `uc ]
+"158
+[; ;main.c: 158:             temp[11] = 223;
+[e = *U + &U _temp * -> -> -> 11 `i `ui `ux -> -> # *U &U _temp `ui `ux -> -> 223 `i `uc ]
+"160
+[; ;main.c: 160:             LcdCmdWrite(0x80);
 [e ( _LcdCmdWrite (1 -> -> 128 `i `uc ]
-"199
-[; ;main.c: 199:             LcdPrint("No Response");
-[e ( _LcdPrint (1 :s 3C ]
-"200
-[; ;main.c: 200:         }
+"161
+[; ;main.c: 161:             LcdPrint(temp);
+[e ( _LcdPrint (1 &U _temp ]
+"163
+[; ;main.c: 163:             LcdCmdWrite(0xC0);
+[e ( _LcdCmdWrite (1 -> -> 192 `i `uc ]
+"164
+[; ;main.c: 164:             LcdPrint(humi);
+[e ( _LcdPrint (1 &U _humi ]
+"165
+[; ;main.c: 165:         }
 }
-[e :U 128 ]
-"201
-[; ;main.c: 201:         _delay((unsigned long)((1000)*(8000000/4000.0)));
+[e $U 130  ]
+"166
+[; ;main.c: 166:         else
+[e :U 129 ]
+"167
+[; ;main.c: 167:         {
+{
+"168
+[; ;main.c: 168:             LcdCmdWrite(0x01);
+[e ( _LcdCmdWrite (1 -> -> 1 `i `uc ]
+"169
+[; ;main.c: 169:             LcdCmdWrite(0x80);
+[e ( _LcdCmdWrite (1 -> -> 128 `i `uc ]
+"170
+[; ;main.c: 170:             LcdPrint("Error");
+[e ( _LcdPrint (1 :s 1C ]
+"171
+[; ;main.c: 171:         }
+}
+[e :U 130 ]
+"172
+[; ;main.c: 172:         TMR1ON = 0;
+[e = _TMR1ON -> -> 0 `i `b ]
+"173
+[; ;main.c: 173:         _delay((unsigned long)((1000)*(8000000/4000.0)));
 [e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
-"202
-[; ;main.c: 202:     }
+"174
+[; ;main.c: 174:     }
 }
-[e :U 120 ]
-[e $U 121  ]
-[e :U 122 ]
-"203
-[; ;main.c: 203:     return;
-[e $UE 119  ]
-"204
-[; ;main.c: 204: }
-[e :UE 119 ]
+[e :U 126 ]
+[e $U 127  ]
+[e :U 128 ]
+"175
+[; ;main.c: 175:     return;
+[e $UE 125  ]
+"176
+[; ;main.c: 176: }
+[e :UE 125 ]
 }
-[a 3C 78 111 32 82 101 115 112 111 110 115 101 0 ]
-[a 1C 84 105 109 101 32 111 117 116 33 0 ]
-[a 2C 67 104 101 99 107 115 117 109 32 69 114 114 111 114 33 0 ]
+[a 1C 69 114 114 111 114 0 ]

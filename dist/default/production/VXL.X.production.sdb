@@ -24,25 +24,23 @@
 "90
 [v _startSignal startSignal `(v  1 e 1 0 ]
 "102
-[v _checkResponse checkResponse `(b  1 e 0 0 ]
-"118
-[v _readData readData `(b  1 e 0 0 ]
-"145
+[v _checkResponse checkResponse `(v  1 e 1 0 ]
+"110
+[v _readData readData `(uc  1 e 1 0 ]
+"129
 [v _main main `(v  1 e 1 0 ]
 "216 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h
 [v _PORTB PORTB `VEuc  1 e 1 @6 ]
 "340
 [v _PORTD PORTD `VEuc  1 e 1 @8 ]
-"641
-[v _TMR1L TMR1L `VEuc  1 e 1 @14 ]
-"648
-[v _TMR1H TMR1H `VEuc  1 e 1 @15 ]
 "1375
 [v _TRISB TRISB `VEuc  1 e 1 @134 ]
 "1499
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "2758
 [v _RD3 RD3 `VEb  1 e 0 @67 ]
+"2893
+[v _TMR1ON TMR1ON `VEb  1 e 0 @128 ]
 "2992
 [v _TRISD3 TRISD3 `VEb  1 e 0 @1091 ]
 "84 D:\MicroProcessor\PIC\VXL.X\main.c
@@ -55,32 +53,28 @@
 [v _rh_byte1 rh_byte1 `uc  1 e 1 0 ]
 [v _rh_byte2 rh_byte2 `uc  1 e 1 0 ]
 [v _check_sum check_sum `uc  1 e 1 0 ]
-"145
+"129
 [v _main main `(v  1 e 1 0 ]
 {
-"204
+"176
 } 0
 "90
 [v _startSignal startSignal `(v  1 e 1 0 ]
 {
 "99
 } 0
-"118
-[v _readData readData `(b  1 e 0 0 ]
+"110
+[v _readData readData `(uc  1 e 1 0 ]
 {
-[v readData@dht_data dht_data `*.1uc  1 a 1 wreg ]
-"122
-[v readData@i i `uc  1 a 1 1 ]
-"118
-[v readData@dht_data dht_data `*.1uc  1 a 1 wreg ]
-"120
-[v readData@dht_data dht_data `*.1uc  1 a 1 2 ]
-"140
+"112
+[v readData@data data `uc  1 a 1 3 ]
+[v readData@i i `uc  1 a 1 2 ]
+"124
 } 0
 "102
-[v _checkResponse checkResponse `(b  1 e 0 0 ]
+[v _checkResponse checkResponse `(v  1 e 1 0 ]
 {
-"115
+"107
 } 0
 "5 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]

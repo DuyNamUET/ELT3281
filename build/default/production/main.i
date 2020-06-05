@@ -1783,44 +1783,28 @@ void startSignal()
 }
 
 
-__bit checkResponse()
+void checkResponse()
 {
-    _delay((unsigned long)((40)*(8000000/4000000.0)));
-    if(!RD3)
-    {
-        _delay((unsigned long)((80)*(8000000/4000000.0)));
-        if(RD3)
-        {
-            _delay((unsigned long)((50)*(8000000/4000000.0)));
-            return 1;
-        }
-    }
-    return 0;
+    while(RD3 & 1);
+    while(!(RD3 & 1));
+    while(RD3 & 1);
 }
 
 
-__bit readData(unsigned char* dht_data)
+unsigned char readData()
 {
-    *dht_data = 0;
-
-    for(char i = 0; i < 8; i++)
+    char i,data = 0;
+    for(i = 0; i < 8; i++)
     {
-      TMR1H = 0;
-      TMR1L = 0;
-
-      while(!RD3)
-          if(TMR1L > 100) return 1;
-
-      TMR1H = 0;
-      TMR1L = 0;
-
-      while(RD3)
-          if(TMR1L > 100) return 1;
-
-      if(TMR1L > 50)
-         *dht_data |= (1 << (7 - i));
+        while(!(RD3 & 1));
+        _delay((unsigned long)((30)*(8000000/4000000.0)));
+        if(RD3 & 1)
+            data = ((data<<1) | 1);
+        else
+            data = (data<<1);
+        while(RD3 & 1);
     }
-    return 0;
+    return data;
 }
 
 
@@ -1838,50 +1822,38 @@ void main(void)
     while(1)
     {
         startSignal();
-        if(checkResponse())
+        checkResponse();
+
+        rh_byte1 = readData();
+        rh_byte2 = readData();
+        t_byte1 = readData();
+        t_byte2 = readData();
+        check_sum = readData();
+
+        if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
         {
+            temp[7] = t_byte1 / 10 + 48;
+            temp[8] = t_byte1 % 10 + 48;
+            temp[10] = t_byte2 / 10 + 48;
 
-            if(readData(&rh_byte1) || readData(&rh_byte2) || readData(&t_byte1)
-                    || readData(&t_byte2) || readData(&check_sum))
-            {
-                LcdCmdWrite(0x01);
-                LcdCmdWrite(0x80);
-                LcdPrint("Time out!");
-            }
-            else
-            {
-                if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
-                {
-                    temp[7] = t_byte1 / 10 + 48;
-                    temp[8] = t_byte1 % 10 + 48;
-                    temp[10] = t_byte2 / 10 + 48;
+            humi[7] = rh_byte1 / 10 + 48;
+            humi[8] = rh_byte1 % 10 + 48;
+            humi[10] = rh_byte2 / 10 + 48;
+            temp[11] = 223;
 
-                    humi[7] = rh_byte1 / 10 + 48;
-                    humi[8] = rh_byte1 % 10 + 48;
-                    humi[10] = rh_byte2 / 10 + 48;
-                    temp[11] = 223;
+            LcdCmdWrite(0x80);
+            LcdPrint(temp);
 
-                    LcdCmdWrite(0x80);
-                    LcdPrint(temp);
-
-                    LcdCmdWrite(0xC0);
-                    LcdPrint(humi);
-                }
-                else
-                {
-                    LcdCmdWrite(0x01);
-                    LcdCmdWrite(0x80);
-                    LcdPrint("Checksum Error!");
-                }
-
-            }
+            LcdCmdWrite(0xC0);
+            LcdPrint(humi);
         }
         else
         {
             LcdCmdWrite(0x01);
             LcdCmdWrite(0x80);
-            LcdPrint("No Response");
+            LcdPrint("Error");
         }
+        TMR1ON = 0;
         _delay((unsigned long)((1000)*(8000000/4000.0)));
     }
     return;
