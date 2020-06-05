@@ -8,8 +8,10 @@ A system can be developed for smart agriculture. A simple tasks of system is rea
 3. LCD LM016L
 
 ## Structure
-Main code file is ```main.c``` and Proteus simulation is on ```VXL``` floder
+Main code file is ```main.c``` and Proteus simulation is on ```VXL``` folder.
 
 ## Import .hex code to PIC on Proteus
-1. 
-2. 
+1. Double click on PIC
+2. At ```Program File```, find hex file at path: ```..\dist\default\production\VXL.X.production.hex``` and choose it.
+3. Click ```OK```
+4. Run the simulation
