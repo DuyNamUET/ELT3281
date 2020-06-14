@@ -1,7 +1,8 @@
 # ELT3281: Microprocessor and Embedded System
 ## Description
 A system can be developed for smart agriculture.
-## List task
+
+## List tasks
 * Read data from DHT11 and show on LCD
 * Show Idea temperature and humidity on LCD
 * Automatic set pump's value
