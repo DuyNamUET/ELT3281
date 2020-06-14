@@ -8,13 +8,6 @@
 # 2 "<built-in>" 2
 # 1 "main.c" 2
 
-
-
-
-
-
-
-
 #pragma config FOSC = XT
 #pragma config WDTE = OFF
 #pragma config PWRTE = ON
@@ -1665,7 +1658,7 @@ extern volatile __bit nW __attribute__((address(0x4A2)));
 
 
 extern volatile __bit nWRITE __attribute__((address(0x4A2)));
-# 19 "main.c" 2
+# 12 "main.c" 2
 
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
 # 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 3
@@ -1735,100 +1728,123 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 20 "main.c" 2
-# 40 "main.c"
-void LcdCmdWrite(char cmd)
-{
-    PORTB = cmd;
-    PORTD &= ~(1<<0);
-    PORTD &= ~(1<<1);
-    PORTD |= (1<<2);
-    _delay((unsigned long)((10)*(8000000/4000.0)));
-    PORTD &= ~(1<<2);
-}
-# 58 "main.c"
-void LcdDataWrite(char data)
-{
-    PORTB = data;
-    PORTD |= (1<<0);
-    PORTD &= ~(1<<1);
-    PORTD |= (1<<2);
-    _delay((unsigned long)((10)*(8000000/4000.0)));
-    PORTD &= ~(1<<2);
-}
+# 13 "main.c" 2
 
-void LcdPrint(char* message)
-{
-    for(char i = 0; message[i] != '\0'; i++)
+# 1 "./lcd.h" 1
+# 32 "./lcd.h"
+    void LcdCmdWrite(char cmd)
     {
-        LcdDataWrite(message[i]);
+        PORTD = (cmd & 0xF0);
+        PORTD &= ~(1<<0);
+        PORTD &= ~(1<<1);
+        PORTD |= (1<<2);
+        _delay((unsigned long)((10)*(20000000/4000.0)));
+        PORTD &= ~(1<<2);
+
+        PORTD = ((cmd<<4) & 0xF0);
+        PORTD &= ~(1<<0);
+        PORTD &= ~(1<<1);
+        PORTD |= (1<<2);
+        _delay((unsigned long)((10)*(20000000/4000.0)));
+        PORTD &= ~(1<<2);
     }
-}
-# 84 "main.c"
-char temp[] = "Temp = 00.0 C";
-char humi[] = "RH   = 00.0 %";
-unsigned char t_byte1, t_byte2, rh_byte1, rh_byte2, check_sum;
-short time_out;
 
 
-void startSignal()
-{
-    TRISD3 = 0;
-    RD3 = 0;
-
-    _delay((unsigned long)((25)*(8000000/4000.0)));
-    RD3 = 1;
-    _delay((unsigned long)((30)*(8000000/4000000.0)));
-    TRISD3 = 1;
-}
-
-
-void checkResponse()
-{
-    while(RD3 & 1);
-    while(!(RD3 & 1));
-    while(RD3 & 1);
-}
-
-
-unsigned char readData()
-{
-    char i,data = 0;
-    for(i = 0; i < 8; i++)
+    void LcdInit()
     {
-        while(!(RD3 & 1));
-        _delay((unsigned long)((30)*(8000000/4000000.0)));
-        if(RD3 & 1)
-            data = ((data<<1) | 1);
-        else
-            data = (data<<1);
-        while(RD3 & 1);
+        TRISD = 0x00;
+        LcdCmdWrite(0x02);
+        LcdCmdWrite(0x28);
+        LcdCmdWrite(0x0E);
+        LcdCmdWrite(0x01);
     }
-    return data;
-}
 
 
 
-
-void main(void)
-{
-
-    TRISB = 0x00;
-    TRISD = 0x00;
-
-    LcdCmdWrite(0x38);
-    LcdCmdWrite(0x0E);
-
-    while(1)
+    void LcdDataWrite(char data)
     {
-        startSignal();
-        checkResponse();
+        PORTD = (data & 0xF0);
+        PORTD |= (1<<0);
+        PORTD &= ~(1<<1);
+        PORTD |= (1<<2);
+        _delay((unsigned long)((10)*(20000000/4000.0)));
+        PORTD &= ~(1<<2);
 
-        rh_byte1 = readData();
-        rh_byte2 = readData();
-        t_byte1 = readData();
-        t_byte2 = readData();
-        check_sum = readData();
+        PORTD = ((data<<4) & 0xF0);
+        PORTD |= (1<<0);
+        PORTD &= ~(1<<1);
+        PORTD |= (1<<2);
+        _delay((unsigned long)((10)*(20000000/4000.0)));
+        PORTD &= ~(1<<2);
+    }
+
+
+    void LcdMsgPrint(char* msg)
+    {
+        for(char i = 0; msg[i] != '\0'; i++)
+        {
+            LcdDataWrite(msg[i]);
+        }
+    }
+# 14 "main.c" 2
+
+# 1 "./dht11.h" 1
+# 16 "./dht11.h"
+    char temp[] = "Temp = 00.0 C";
+    char humi[] = "RH   = 00.0 %";
+
+    unsigned char t_byte1, t_byte2;
+    unsigned char rh_byte1, rh_byte2;
+    unsigned char check_sum;
+
+
+    void DhtStartSignal()
+    {
+        TRISB4 = 0;
+        RB4 = 0;
+
+        _delay((unsigned long)((25)*(20000000/4000.0)));
+        RB4 = 1;
+        _delay((unsigned long)((30)*(20000000/4000000.0)));
+        TRISB4 = 1;
+    }
+
+
+    void DhtCheckResponse()
+    {
+        while(RB4 & 1);
+        while(!(RB4 & 1));
+        while(RB4 & 1);
+    }
+
+
+    unsigned char DhtReadData()
+    {
+        char i, data = 0;
+        for(i = 0; i < 8; i++)
+        {
+            while(!(RB4 & 1));
+            _delay((unsigned long)((30)*(20000000/4000000.0)));
+            if(RB4 & 1)
+                data = ((data<<1) | 1);
+            else
+                data = (data<<1);
+            while(RB4 & 1);
+        }
+        return data;
+    }
+
+
+    __bit DhtUpdateData()
+    {
+        DhtStartSignal();
+        DhtCheckResponse();
+
+        rh_byte1 = DhtReadData();
+        rh_byte2 = DhtReadData();
+        t_byte1 = DhtReadData();
+        t_byte2 = DhtReadData();
+        check_sum = DhtReadData();
 
         if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
         {
@@ -1839,22 +1855,120 @@ void main(void)
             humi[7] = rh_byte1 / 10 + 48;
             humi[8] = rh_byte1 % 10 + 48;
             humi[10] = rh_byte2 / 10 + 48;
-            temp[11] = 223;
 
-            LcdCmdWrite(0x80);
-            LcdPrint(temp);
+            return 1;
+        }
+        return 0;
+    }
+# 15 "main.c" 2
 
-            LcdCmdWrite(0xC0);
-            LcdPrint(humi);
+# 1 "./pwm.h" 1
+# 10 "./pwm.h"
+    void configPWM()
+    {
+
+        CCP1M2 = 1;
+        CCP1M3 = 1;
+
+        TRISC2 = 0;
+
+        T2CKPS0 = 1;
+        T2CKPS1 = 1;
+        TMR2ON = 1;
+
+
+        PR2 = 49;
+    }
+
+
+
+
+    void setPWM(unsigned char DC)
+    {
+
+        CCP1Y = DC & (1<<0);
+        CCP1X = DC & (1<<1);
+
+        CCPR1L = DC >> 2;
+    }
+# 16 "main.c" 2
+
+
+
+
+
+char idea_temp[] = "IDTemp = 20.0 C";
+char idea_humi[] = "IDRH   = 95.0 %";
+unsigned char itemp = 20;
+unsigned char ihumi = 95;
+
+__bit status = 0;
+
+
+void setPumpValue(unsigned char r_rh, unsigned char id_rh);
+
+void main(void)
+{
+
+
+    INTEDG = 1;
+    INTE = 1;
+    GIE = 1;
+
+
+
+
+    LcdInit();
+    configPWM();
+
+    while(1)
+    {
+        if(!status)
+        {
+            if(DhtUpdateData())
+            {
+                LcdCmdWrite(0x80);
+                LcdMsgPrint(temp);
+                LcdCmdWrite(0xC0);
+                LcdMsgPrint(humi);
+            }
+            else
+            {
+                LcdCmdWrite(0x80);
+                LcdMsgPrint("Error");
+            }
         }
         else
         {
             LcdCmdWrite(0x01);
             LcdCmdWrite(0x80);
-            LcdPrint("Error");
+            LcdMsgPrint(idea_temp);
+            LcdCmdWrite(0xC0);
+            LcdMsgPrint(idea_humi);
         }
-        TMR1ON = 0;
-        _delay((unsigned long)((1000)*(8000000/4000.0)));
+
+        setPumpValue(rh_byte1, ihumi);
+        _delay((unsigned long)((1000)*(20000000/4000.0)));
     }
     return;
+}
+
+void __attribute__((picinterrupt(("")))) ISR()
+{
+    if(INTF == 1)
+    {
+        status = ~status;
+        LcdCmdWrite(0x01);
+        INTF = 0;
+    }
+}
+
+
+void setPumpValue(unsigned char r_rh, unsigned char id_rh)
+{
+    char delta = id_rh - r_rh;
+    if(delta > 0)
+    {
+        setPWM(delta/id_rh*200);
+    }
 }
