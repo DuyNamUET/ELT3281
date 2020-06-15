@@ -19,7 +19,7 @@
 
 // Set idea temp and humi
 char idea_temp[] = "IDTemp = 20.0 C";
-char idea_humi[] = "IDRH   = 95.0 %";
+char idea_humi[] = "IDRH   = 85.0 %";
 unsigned char itemp = 20;
 unsigned char ihumi = 95;
 
@@ -69,6 +69,7 @@ void main(void)
         }
         
         setPumpValue(rh_byte1, ihumi);
+//        setPWM(100);
         __delay_ms(1000);
     }
     return;
@@ -84,12 +85,13 @@ void __interrupt() ISR()
     }
 }
 
-
 void setPumpValue(unsigned char r_rh, unsigned char id_rh)
 {
-    char delta = id_rh - r_rh;  // check error
+    char delta = 10*(id_rh - r_rh);     // set delta = 10 * error
     if(delta > 0)
     {
-        setPWM(delta/id_rh*PWM_MAX);    // set PWM pump
+        if(delta < PWM_MAX) setPWM(10*delta);    // set PWM pump
+        else setPWM(PWM_MAX);
     }
+    else setPWM(0);     // stop pump
 }

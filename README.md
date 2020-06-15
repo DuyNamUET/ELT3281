@@ -1,7 +1,8 @@
 # ELT3281: Microprocessor and Embedded System
 ## Description
 A system can be developed for smart agriculture.
-## List task
+
+## List tasks
 * Read data from DHT11 and show on LCD
 * Show Idea temperature and humidity on LCD
 * Automatic set pump's value
@@ -10,7 +11,7 @@ A system can be developed for smart agriculture.
 1. PIC16F877A
 2. DHT11 sensor
 3. LCD LM016L
-4. Mini pump 5VDC (in simulator, it is RED LED)
+4. Mini pump 5VDC (in simulator, it is DC motor)
 
 ## Structure
 Main code file is ```main.c``` and Proteus simulation is on ```VXL``` folder.

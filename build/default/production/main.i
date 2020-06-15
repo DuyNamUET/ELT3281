@@ -1898,7 +1898,7 @@ extern __bank0 __bit __timeout;
 
 
 char idea_temp[] = "IDTemp = 20.0 C";
-char idea_humi[] = "IDRH   = 95.0 %";
+char idea_humi[] = "IDRH   = 85.0 %";
 unsigned char itemp = 20;
 unsigned char ihumi = 95;
 
@@ -1948,6 +1948,7 @@ void main(void)
         }
 
         setPumpValue(rh_byte1, ihumi);
+
         _delay((unsigned long)((1000)*(20000000/4000.0)));
     }
     return;
@@ -1963,12 +1964,13 @@ void __attribute__((picinterrupt(("")))) ISR()
     }
 }
 
-
 void setPumpValue(unsigned char r_rh, unsigned char id_rh)
 {
-    char delta = id_rh - r_rh;
+    char delta = 10*(id_rh - r_rh);
     if(delta > 0)
     {
-        setPWM(delta/id_rh*200);
+        if(delta < 200) setPWM(10*delta);
+        else setPWM(200);
     }
+    else setPWM(0);
 }

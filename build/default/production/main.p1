@@ -767,7 +767,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 ..
 ]
 "22
-[; ;main.c: 22: char idea_humi[] = "IDRH   = 95.0 %";
+[; ;main.c: 22: char idea_humi[] = "IDRH   = 85.0 %";
 [v _idea_humi `uc ~T0 @X0 -> 16 `i e ]
 [i _idea_humi
 :U ..
@@ -780,7 +780,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 -> 32 `c
 -> 61 `c
 -> 32 `c
--> 57 `c
+-> 56 `c
 -> 53 `c
 -> 46 `c
 -> 48 `c
@@ -913,52 +913,52 @@ Version 4.0 HI-TECH Software Intermediate Code
 "71
 [; ;main.c: 71:         setPumpValue(rh_byte1, ihumi);
 [e ( _setPumpValue (2 , _rh_byte1 _ihumi ]
-"72
-[; ;main.c: 72:         _delay((unsigned long)((1000)*(20000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
 "73
-[; ;main.c: 73:     }
+[; ;main.c: 73:         _delay((unsigned long)((1000)*(20000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 20000000 `l `d .4000.0 `ul ]
+"74
+[; ;main.c: 74:     }
 }
 [e :U 131 ]
 [e $U 132  ]
 [e :U 133 ]
-"74
-[; ;main.c: 74:     return;
-[e $UE 130  ]
 "75
-[; ;main.c: 75: }
+[; ;main.c: 75:     return;
+[e $UE 130  ]
+"76
+[; ;main.c: 76: }
 [e :UE 130 ]
 }
 [v $root$_ISR `(v ~T0 @X0 0 e ]
-"77
-[; ;main.c: 77: void __attribute__((picinterrupt(("")))) ISR()
-[v _ISR `(v ~T1 @X0 1 ef ]
 "78
-[; ;main.c: 78: {
+[; ;main.c: 78: void __attribute__((picinterrupt(("")))) ISR()
+[v _ISR `(v ~T1 @X0 1 ef ]
+"79
+[; ;main.c: 79: {
 {
 [e :U _ISR ]
 [f ]
-"79
-[; ;main.c: 79:     if(INTF == 1)
-[e $ ! == -> _INTF `i -> 1 `i 139  ]
 "80
-[; ;main.c: 80:     {
-{
+[; ;main.c: 80:     if(INTF == 1)
+[e $ ! == -> _INTF `i -> 1 `i 139  ]
 "81
-[; ;main.c: 81:         status = ~status;
-[e = _status -> ~ -> _status `ui `b ]
+[; ;main.c: 81:     {
+{
 "82
-[; ;main.c: 82:         LcdCmdWrite(0x01);
-[e ( _LcdCmdWrite (1 -> -> 1 `i `uc ]
+[; ;main.c: 82:         status = ~status;
+[e = _status -> ~ -> _status `ui `b ]
 "83
-[; ;main.c: 83:         INTF = 0;
-[e = _INTF -> -> 0 `i `b ]
+[; ;main.c: 83:         LcdCmdWrite(0x01);
+[e ( _LcdCmdWrite (1 -> -> 1 `i `uc ]
 "84
-[; ;main.c: 84:     }
+[; ;main.c: 84:         INTF = 0;
+[e = _INTF -> -> 0 `i `b ]
+"85
+[; ;main.c: 85:     }
 }
 [e :U 139 ]
-"85
-[; ;main.c: 85: }
+"86
+[; ;main.c: 86: }
 [e :UE 138 ]
 }
 "88
@@ -976,9 +976,9 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 89: {
 [f ]
 "90
-[; ;main.c: 90:     char delta = id_rh - r_rh;
+[; ;main.c: 90:     char delta = 10*(id_rh - r_rh);
 [v _delta `uc ~T0 @X0 1 a ]
-[e = _delta -> - -> _id_rh `i -> _r_rh `i `uc ]
+[e = _delta -> * -> 10 `i - -> _id_rh `i -> _r_rh `i `uc ]
 "91
 [; ;main.c: 91:     if(delta > 0)
 [e $ ! > -> _delta `i -> 0 `i 141  ]
@@ -986,14 +986,26 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 92:     {
 {
 "93
-[; ;main.c: 93:         setPWM(delta/id_rh*200);
-[e ( _setPWM (1 -> * / -> _delta `i -> _id_rh `i -> 200 `i `uc ]
+[; ;main.c: 93:         if(delta < 200) setPWM(10*delta);
+[e $ ! < -> _delta `i -> 200 `i 142  ]
+[e ( _setPWM (1 -> * -> 10 `i -> _delta `i `uc ]
+[e $U 143  ]
 "94
-[; ;main.c: 94:     }
-}
-[e :U 141 ]
+[; ;main.c: 94:         else setPWM(200);
+[e :U 142 ]
+[e ( _setPWM (1 -> -> 200 `i `uc ]
+[e :U 143 ]
 "95
-[; ;main.c: 95: }
+[; ;main.c: 95:     }
+}
+[e $U 144  ]
+"96
+[; ;main.c: 96:     else setPWM(0);
+[e :U 141 ]
+[e ( _setPWM (1 -> -> 0 `i `uc ]
+[e :U 144 ]
+"97
+[; ;main.c: 97: }
 [e :UE 140 ]
 }
 [a 1C 69 114 114 111 114 0 ]
