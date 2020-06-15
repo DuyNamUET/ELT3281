@@ -25,7 +25,6 @@ unsigned char ihumi = 95;
 
 __bit status = 0;           // status to show on LCD
 
-// Function to set value for pump
 void setPumpValue(unsigned char r_rh, unsigned char id_rh);
 
 void main(void)
@@ -44,22 +43,22 @@ void main(void)
     
     while(1)
     {
-        if(!status)
+        if(!status)     // status = 0: print temp and humi at the present
         {
-            if(DhtUpdateData())
+            if(DhtUpdateData())     // Updated
             {
                 LcdCmdWrite(ROW1);
                 LcdMsgPrint(temp);
                 LcdCmdWrite(ROW2);
                 LcdMsgPrint(humi);
             }
-            else
+            else    // Update false
             {
                 LcdCmdWrite(ROW1);
                 LcdMsgPrint("Error");
             }
         }
-        else
+        else            // status = 1: Print temp and humi at idea
         {
             LcdCmdWrite(CLEAR);
             LcdCmdWrite(ROW1);
@@ -69,15 +68,15 @@ void main(void)
         }
         
         setPumpValue(rh_byte1, ihumi);
-//        setPWM(100);
-        __delay_ms(1000);
+        __delay_ms(100);
     }
     return;
 }
 
+// Function to do if interrupt
 void __interrupt() ISR()
 {
-    if(INTF == 1)
+    if(INTF == 1)       // RB0 interrupt
     {
         status = ~status;
         LcdCmdWrite(CLEAR);
@@ -85,6 +84,7 @@ void __interrupt() ISR()
     }
 }
 
+// Function to set value for pump
 void setPumpValue(unsigned char r_rh, unsigned char id_rh)
 {
     char delta = 10*(id_rh - r_rh);     // set delta = 10 * error

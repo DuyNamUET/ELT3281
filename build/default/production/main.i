@@ -1904,7 +1904,6 @@ unsigned char ihumi = 95;
 
 __bit status = 0;
 
-
 void setPumpValue(unsigned char r_rh, unsigned char id_rh);
 
 void main(void)
@@ -1948,11 +1947,11 @@ void main(void)
         }
 
         setPumpValue(rh_byte1, ihumi);
-
-        _delay((unsigned long)((1000)*(20000000/4000.0)));
+        _delay((unsigned long)((100)*(20000000/4000.0)));
     }
     return;
 }
+
 
 void __attribute__((picinterrupt(("")))) ISR()
 {
@@ -1963,6 +1962,7 @@ void __attribute__((picinterrupt(("")))) ISR()
         INTF = 0;
     }
 }
+
 
 void setPumpValue(unsigned char r_rh, unsigned char id_rh)
 {
