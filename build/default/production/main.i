@@ -8,7 +8,8 @@
 # 2 "<built-in>" 2
 # 1 "main.c" 2
 
-#pragma config FOSC = XT
+
+#pragma config FOSC = HS
 #pragma config WDTE = OFF
 #pragma config PWRTE = ON
 #pragma config BOREN = ON
@@ -18,7 +19,43 @@
 #pragma config CP = OFF
 
 
+# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
+# 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 3
+extern const char __xc8_OPTIM_SPEED;
 
+extern double __fpnormalize(double);
+
+
+
+# 1 "C:\\Program Files\\Microchip\\xc8\\v2.20\\pic\\include\\c90\\xc8debug.h" 1 3
+# 13 "C:\\Program Files\\Microchip\\xc8\\v2.20\\pic\\include\\c90\\xc8debug.h" 3
+#pragma intrinsic(__builtin_software_breakpoint)
+extern void __builtin_software_breakpoint(void);
+# 24 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
+
+
+
+# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic.h" 1 3
+
+
+
+
+# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\htc.h" 1 3
+
+
+
+# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
+# 5 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\htc.h" 2 3
+# 6 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic.h" 2 3
+
+
+
+
+
+
+
+# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic_chip_select.h" 1 3
+# 663 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic_chip_select.h" 3
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\proc\\pic16f877a.h" 1 3
 # 44 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\proc\\pic16f877a.h" 3
 # 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\__at.h" 1 3
@@ -1658,44 +1695,7 @@ extern volatile __bit nW __attribute__((address(0x4A2)));
 
 
 extern volatile __bit nWRITE __attribute__((address(0x4A2)));
-# 12 "main.c" 2
-
-# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
-# 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 3
-extern const char __xc8_OPTIM_SPEED;
-
-extern double __fpnormalize(double);
-
-
-
-# 1 "C:\\Program Files\\Microchip\\xc8\\v2.20\\pic\\include\\c90\\xc8debug.h" 1 3
-# 13 "C:\\Program Files\\Microchip\\xc8\\v2.20\\pic\\include\\c90\\xc8debug.h" 3
-#pragma intrinsic(__builtin_software_breakpoint)
-extern void __builtin_software_breakpoint(void);
-# 24 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-
-
-
-# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic.h" 1 3
-
-
-
-
-# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\htc.h" 1 3
-
-
-
-# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 1 3
-# 5 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\htc.h" 2 3
-# 6 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic.h" 2 3
-
-
-
-
-
-
-
-# 1 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic_chip_select.h" 1 3
+# 664 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic_chip_select.h" 2 3
 # 14 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic.h" 2 3
 # 30 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\pic.h" 3
 #pragma intrinsic(__nop)
@@ -1728,172 +1728,237 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 13 "main.c" 2
+# 12 "main.c" 2
 
 # 1 "./lcd.h" 1
-# 32 "./lcd.h"
-    void LcdCmdWrite(char cmd)
+# 26 "./lcd.h"
+void Lcd_SetBit(char data_bit)
+{
+    if(data_bit& 1) RD4 = 1;
+    else RD4 = 0;
+
+    if(data_bit& 2) RD5 = 1;
+    else RD5 = 0;
+
+    if(data_bit& 4) RD6 = 1;
+    else RD6 = 0;
+
+    if(data_bit& 8) RD7 = 1;
+    else RD7 = 0;
+}
+
+void Lcd_Cmd(char a)
+{
+    RD1 = 0;
+    Lcd_SetBit(a);
+    RD3 = 1;
+    _delay((unsigned long)((4)*(20000000/4000.0)));
+    RD3 = 0;
+}
+
+void Lcd_Clear()
+{
+    Lcd_Cmd(0);
+    Lcd_Cmd(1);
+}
+
+void Lcd_Set_Cursor(char a, char b)
+{
+    char temp,z,y;
+    if(a == 1)
     {
-        PORTD = (cmd & 0xF0);
-        PORTD &= ~(1<<0);
-        PORTD &= ~(1<<1);
-        PORTD |= (1<<2);
-        _delay((unsigned long)((10)*(20000000/4000.0)));
-        PORTD &= ~(1<<2);
-
-        PORTD = ((cmd<<4) & 0xF0);
-        PORTD &= ~(1<<0);
-        PORTD &= ~(1<<1);
-        PORTD |= (1<<2);
-        _delay((unsigned long)((10)*(20000000/4000.0)));
-        PORTD &= ~(1<<2);
+      temp = 0x80 + b - 1;
+        z = temp>>4;
+        y = temp & 0x0F;
+        Lcd_Cmd(z);
+        Lcd_Cmd(y);
     }
-
-
-    void LcdInit()
+    else if(a == 2)
     {
-        TRISD = 0x00;
-        LcdCmdWrite(0x02);
-        LcdCmdWrite(0x28);
-        LcdCmdWrite(0x0E);
-        LcdCmdWrite(0x01);
+        temp = 0xC0 + b - 1;
+        z = temp>>4;
+        y = temp & 0x0F;
+        Lcd_Cmd(z);
+        Lcd_Cmd(y);
     }
+}
 
+void Lcd_Start()
+{
+  Lcd_SetBit(0x00);
+  _delay((unsigned long)((60)*(20000000/4000.0)));
+  Lcd_Cmd(0x03);
+  _delay((unsigned long)((5)*(20000000/4000.0)));
+  Lcd_Cmd(0x03);
+  _delay((unsigned long)((11)*(20000000/4000.0)));
+  Lcd_Cmd(0x03);
+  Lcd_Cmd(0x02);
+  Lcd_Cmd(0x02);
+  Lcd_Cmd(0x08);
+  Lcd_Cmd(0x00);
+  Lcd_Cmd(0x0C);
+  Lcd_Cmd(0x00);
+  Lcd_Cmd(0x06);
+}
 
+void Lcd_Print_Char(char data)
+{
+   char Lower_Nibble,Upper_Nibble;
+   Lower_Nibble = data&0x0F;
+   Upper_Nibble = data&0xF0;
+   RD1 = 1;
+   Lcd_SetBit(Upper_Nibble>>4);
+   RD3 = 1;
+   _delay((unsigned long)((100)*(20000000/4000.0)));
+   RD3 = 0;
+   Lcd_SetBit(Lower_Nibble);
+   RD3 = 1;
+   _delay((unsigned long)((100)*(20000000/4000.0)));
+   RD3 = 0;
+}
 
-    void LcdDataWrite(char data)
-    {
-        PORTD = (data & 0xF0);
-        PORTD |= (1<<0);
-        PORTD &= ~(1<<1);
-        PORTD |= (1<<2);
-        _delay((unsigned long)((10)*(20000000/4000.0)));
-        PORTD &= ~(1<<2);
-
-        PORTD = ((data<<4) & 0xF0);
-        PORTD |= (1<<0);
-        PORTD &= ~(1<<1);
-        PORTD |= (1<<2);
-        _delay((unsigned long)((10)*(20000000/4000.0)));
-        PORTD &= ~(1<<2);
-    }
-
-
-    void LcdMsgPrint(char* msg)
-    {
-        for(char i = 0; msg[i] != '\0'; i++)
-        {
-            LcdDataWrite(msg[i]);
-        }
-    }
-# 14 "main.c" 2
+void Lcd_Print_String(char *a)
+{
+    int i;
+    for(i=0;a[i]!='\0';i++)
+       Lcd_Print_Char(a[i]);
+}
+# 13 "main.c" 2
 
 # 1 "./dht11.h" 1
-# 16 "./dht11.h"
-    char temp[] = "Temp = 00.0 C";
-    char humi[] = "RH   = 00.0 %";
+# 22 "./dht11.h"
+char temp[] = "Temp = 00.0 C";
+char humi[] = "RH   = 00.0 %";
 
-    unsigned char t_byte1, t_byte2;
-    unsigned char rh_byte1, rh_byte2;
-    unsigned char check_sum;
+unsigned char t_byte1, t_byte2;
+unsigned char rh_byte1, rh_byte2;
+unsigned char check_sum;
 
 
-    void DhtStartSignal()
+void DhtStartSignal()
+{
+    TRISB4 = 0;
+    RB4 = 0;
+
+    _delay((unsigned long)((25)*(20000000/4000.0)));
+    RB4 = 1;
+    _delay((unsigned long)((30)*(20000000/4000000.0)));
+    TRISB4 = 1;
+}
+
+
+void DhtCheckResponse()
+{
+    while(RB4 & 1);
+    while(!(RB4 & 1));
+    while(RB4 & 1);
+}
+
+
+unsigned char DhtReadData()
+{
+    char i, data = 0;
+    for(i = 0; i < 8; i++)
     {
-        TRISB4 = 0;
-        RB4 = 0;
-
-        _delay((unsigned long)((25)*(20000000/4000.0)));
-        RB4 = 1;
-        _delay((unsigned long)((30)*(20000000/4000000.0)));
-        TRISB4 = 1;
-    }
-
-
-    void DhtCheckResponse()
-    {
-        while(RB4 & 1);
         while(!(RB4 & 1));
+        _delay((unsigned long)((30)*(20000000/4000000.0)));
+        if(RB4 & 1)
+            data = ((data<<1) | 1);
+        else
+            data = (data<<1);
         while(RB4 & 1);
     }
+    return data;
+}
 
 
-    unsigned char DhtReadData()
+__bit DhtUpdateData()
+{
+    DhtStartSignal();
+    DhtCheckResponse();
+
+    rh_byte1 = DhtReadData();
+    rh_byte2 = DhtReadData();
+    t_byte1 = DhtReadData();
+    t_byte2 = DhtReadData();
+    check_sum = DhtReadData();
+
+    if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
     {
-        char i, data = 0;
-        for(i = 0; i < 8; i++)
-        {
-            while(!(RB4 & 1));
-            _delay((unsigned long)((30)*(20000000/4000000.0)));
-            if(RB4 & 1)
-                data = ((data<<1) | 1);
-            else
-                data = (data<<1);
-            while(RB4 & 1);
-        }
-        return data;
+        temp[7] = t_byte1 / 10 + 48;
+        temp[8] = t_byte1 % 10 + 48;
+        temp[10] = t_byte2 / 10 + 48;
+
+        humi[7] = rh_byte1 / 10 + 48;
+        humi[8] = rh_byte1 % 10 + 48;
+        humi[10] = rh_byte2 / 10 + 48;
+
+        return 1;
     }
-
-
-    __bit DhtUpdateData()
-    {
-        DhtStartSignal();
-        DhtCheckResponse();
-
-        rh_byte1 = DhtReadData();
-        rh_byte2 = DhtReadData();
-        t_byte1 = DhtReadData();
-        t_byte2 = DhtReadData();
-        check_sum = DhtReadData();
-
-        if(check_sum == ((rh_byte1 + rh_byte2 + t_byte1 + t_byte2) & 0xFF))
-        {
-            temp[7] = t_byte1 / 10 + 48;
-            temp[8] = t_byte1 % 10 + 48;
-            temp[10] = t_byte2 / 10 + 48;
-
-            humi[7] = rh_byte1 / 10 + 48;
-            humi[8] = rh_byte1 % 10 + 48;
-            humi[10] = rh_byte2 / 10 + 48;
-
-            return 1;
-        }
-        return 0;
-    }
-# 15 "main.c" 2
+    return 0;
+}
+# 14 "main.c" 2
 
 # 1 "./pwm.h" 1
-# 10 "./pwm.h"
-    void configPWM()
-    {
+# 17 "./pwm.h"
+void configPWM()
+{
 
-        CCP1M2 = 1;
-        CCP1M3 = 1;
+    CCP1M2 = 1;
+    CCP1M3 = 1;
 
-        TRISC2 = 0;
+    TRISC2 = 0;
 
-        T2CKPS0 = 1;
-        T2CKPS1 = 1;
-        TMR2ON = 1;
-
-
-        PR2 = 49;
-    }
+    T2CKPS0 = 1;
+    T2CKPS1 = 1;
+    TMR2ON = 1;
 
 
+    PR2 = 49;
+}
+
+void setPWM(unsigned char DC)
+{
+
+    CCP1Y = DC & (1<<0);
+    CCP1X = DC & (1<<1);
+
+    CCPR1L = DC >> 2;
+}
+# 15 "main.c" 2
+
+# 1 "./adc.h" 1
+# 21 "./adc.h"
+void ADC_Init()
+{
+    ADCON0 = 0x41;
+    ADCON1 = 0x80;
+}
+
+int ADC_Read(int ADC_channel){
+
+    if(ADC_channel < 0 || ADC_channel > 7)
+        return 0;
 
 
-    void setPWM(unsigned char DC)
-    {
+    CHS0 = (ADC_channel & 1) >> 0;
+    CHS1 = (ADC_channel & 2) >> 1;
+    CHS2 = (ADC_channel & 4) >> 2;
 
-        CCP1Y = DC & (1<<0);
-        CCP1X = DC & (1<<1);
 
-        CCPR1L = DC >> 2;
-    }
+    _delay((unsigned long)((25)*(20000000/4000000.0)));
+
+
+    GO_DONE = 1;
+
+
+    while(GO_DONE);
+
+
+    int result = ((ADRESH << 8) + ADRESL);
+    return result;
+}
 # 16 "main.c" 2
-
-
 
 
 
@@ -1902,11 +1967,11 @@ char idea_humi[] = "IDRH   = 85.0 %";
 unsigned char itemp = 20;
 unsigned char ihumi = 95;
 
-__bit status = 0;
+unsigned char status = 0;
 
 void setPumpValue(unsigned char r_rh, unsigned char id_rh);
 
-void main(void)
+int main()
 {
 
 
@@ -1916,40 +1981,49 @@ void main(void)
 
 
 
+    TRISD = 0x00;
+    RD2 = 0;
+    Lcd_Start();
 
-    LcdInit();
     configPWM();
 
+    ADC_Init();
     while(1)
     {
-        if(!status)
+        Lcd_Clear();
+        if(status == 0)
         {
             if(DhtUpdateData())
             {
-                LcdCmdWrite(0x80);
-                LcdMsgPrint(temp);
-                LcdCmdWrite(0xC0);
-                LcdMsgPrint(humi);
+                Lcd_Set_Cursor(1,1);
+                Lcd_Print_String(temp);
+                Lcd_Set_Cursor(2,1);
+                Lcd_Print_String(humi);
             }
             else
             {
-                LcdCmdWrite(0x80);
-                LcdMsgPrint("Error");
+                Lcd_Print_String("Error");
             }
+        }
+        else if(status == 1)
+        {
+
+            Lcd_Set_Cursor(1,1);
+            Lcd_Print_String(idea_temp);
+            Lcd_Set_Cursor(2,1);
+            Lcd_Print_String(idea_humi);
         }
         else
         {
-            LcdCmdWrite(0x01);
-            LcdCmdWrite(0x80);
-            LcdMsgPrint(idea_temp);
-            LcdCmdWrite(0xC0);
-            LcdMsgPrint(idea_humi);
+            Lcd_Set_Cursor(1,1);
+            Lcd_Print_String("Handheld PWM");
+            Lcd_Set_Cursor(2,1);
+            setPWM(ADC_Read(0)/10);
         }
-
-        setPumpValue(rh_byte1, ihumi);
-        _delay((unsigned long)((100)*(20000000/4000.0)));
+        if(status != 2) setPumpValue(rh_byte1, ihumi);
+        _delay((unsigned long)((1000)*(20000000/4000.0)));
     }
-    return;
+    return 0;
 }
 
 
@@ -1957,8 +2031,7 @@ void __attribute__((picinterrupt(("")))) ISR()
 {
     if(INTF == 1)
     {
-        status = ~status;
-        LcdCmdWrite(0x01);
+        status = (status+1)%3;
         INTF = 0;
     }
 }

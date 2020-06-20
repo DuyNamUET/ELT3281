@@ -1,21 +1,19 @@
-// BEGIN CONFIG
-#pragma config FOSC = XT        // Oscillator Selection bits (XT oscillator)
+#define _XTAL_FREQ 20000000
+
+#pragma config FOSC = HS        // Oscillator Selection bits (HS oscillator)
 #pragma config WDTE = OFF       // Watchdog Timer Enable bit (WDT disabled)
 #pragma config PWRTE = ON       // Power-up Timer Enable bit (PWRT enabled)
 #pragma config BOREN = ON       // Brown-out Reset Enable bit (BOR enabled)
 #pragma config LVP = OFF        // Low-Voltage (Single-Supply) In-Circuit Serial Programming Enable bit (RB3 is digital I/O, HV on MCLR must be used for programming)
 #pragma config CPD = OFF        // Data EEPROM Memory Code Protection bit (Data EEPROM code protection off)
 #pragma config WRT = OFF        // Flash Program Memory Write Enable bits (Write protection off; all program memory may be written to by EECON control)
-#pragma config CP = OFF         // Flash Program M
-//END CONFIG
+#pragma config CP = OFF         // Flash Program Memory Code Protection bit (Code protection off)
 
-#include <pic16f877a.h>
 #include <xc.h>
 #include "lcd.h"
 #include "dht11.h"
 #include "pwm.h"
-
-#define _XTAL_FREQ 20000000 // 20MHz
+#include "adc.h"
 
 // Set idea temp and humi
 char idea_temp[] = "IDTemp = 20.0 C";
@@ -23,54 +21,63 @@ char idea_humi[] = "IDRH   = 85.0 %";
 unsigned char itemp = 20;
 unsigned char ihumi = 95;
 
-__bit status = 0;           // status to show on LCD
+unsigned char status = 0;           // status to show on LCD
 
 void setPumpValue(unsigned char r_rh, unsigned char id_rh);
 
-void main(void)
+int main()
 {
     /* Interrupt setup */
     // RB0 interrupt
     INTEDG = 1;                 // Interrupt edge config bit (HIGH value means interrupt occurs every rising edge)
     INTE = 1;                   // IRQ (Interrupt request pin RB0) Interrupt Enable bit
     GIE = 1;                    // Global Interrupt Enable bit
-    
     /* Interrupt end setting*/
-    
-    // Initialize hardware
-    LcdInit();      // LCD initialization
-    configPWM();    // Configure PWM
-    
+
+    // Lcd init
+    TRISD = 0x00;
+    RD2 = 0;
+    Lcd_Start();
+    // Configure PWM
+    configPWM();
+    // Init ADC module
+    ADC_Init();
     while(1)
     {
-        if(!status)     // status = 0: print temp and humi at the present
+        Lcd_Clear();
+        if(status == 0)
         {
-            if(DhtUpdateData())     // Updated
+            if(DhtUpdateData())
             {
-                LcdCmdWrite(ROW1);
-                LcdMsgPrint(temp);
-                LcdCmdWrite(ROW2);
-                LcdMsgPrint(humi);
+                Lcd_Set_Cursor(1,1);
+                Lcd_Print_String(temp);
+                Lcd_Set_Cursor(2,1);
+                Lcd_Print_String(humi);
             }
-            else    // Update false
+            else
             {
-                LcdCmdWrite(ROW1);
-                LcdMsgPrint("Error");
+                Lcd_Print_String("Error");
             }
         }
-        else            // status = 1: Print temp and humi at idea
+        else if(status == 1)
         {
-            LcdCmdWrite(CLEAR);
-            LcdCmdWrite(ROW1);
-            LcdMsgPrint(idea_temp);
-            LcdCmdWrite(ROW2);
-            LcdMsgPrint(idea_humi);
+            
+            Lcd_Set_Cursor(1,1);
+            Lcd_Print_String(idea_temp);
+            Lcd_Set_Cursor(2,1);
+            Lcd_Print_String(idea_humi);
         }
-        
-        setPumpValue(rh_byte1, ihumi);
-        __delay_ms(100);
+        else
+        {
+            Lcd_Set_Cursor(1,1);
+            Lcd_Print_String("Handheld PWM");
+            Lcd_Set_Cursor(2,1);
+            setPWM(ADC_Read(0)/10);
+        }
+        if(status != 2) setPumpValue(rh_byte1, ihumi);
+        __delay_ms(1000);
     }
-    return;
+    return 0;
 }
 
 // Function to do if interrupt
@@ -78,8 +85,7 @@ void __interrupt() ISR()
 {
     if(INTF == 1)       // RB0 interrupt
     {
-        status = ~status;
-        LcdCmdWrite(CLEAR);
+        status = (status+1)%3;
         INTF = 0;
     }
 }

@@ -3,31 +3,41 @@
 [d edition pro ]
 [d chip 16F877A ]
 [d frameptr 0 ]
-"24 D:\MicroProcessor\PIC\VXL.X/dht11.h
+"21 D:\MicroProcessor\PIC\VXL.X/adc.h
+[v _ADC_Init ADC_Init `(v  1 e 1 0 ]
+"27
+[v _ADC_Read ADC_Read `(i  1 e 2 0 ]
+"30 D:\MicroProcessor\PIC\VXL.X/dht11.h
 [v _DhtStartSignal DhtStartSignal `(v  1 e 1 0 ]
-"36
+"42
 [v _DhtCheckResponse DhtCheckResponse `(v  1 e 1 0 ]
-"44
-[v _DhtReadData DhtReadData `(uc  1 e 1 0 ]
-"61
-[v _DhtUpdateData DhtUpdateData `(b  1 e 0 0 ]
-"32 D:\MicroProcessor\PIC\VXL.X/lcd.h
-[v _LcdCmdWrite LcdCmdWrite `(v  1 e 1 0 ]
-[v i1_LcdCmdWrite LcdCmdWrite `(v  1 e 1 0 ]
 "50
-[v _LcdInit LcdInit `(v  1 e 1 0 ]
-"61
-[v _LcdDataWrite LcdDataWrite `(v  1 e 1 0 ]
-"79
-[v _LcdMsgPrint LcdMsgPrint `(v  1 e 1 0 ]
-"10 D:\MicroProcessor\PIC\VXL.X/pwm.h
+[v _DhtReadData DhtReadData `(uc  1 e 1 0 ]
+"67
+[v _DhtUpdateData DhtUpdateData `(b  1 e 0 0 ]
+"26 D:\MicroProcessor\PIC\VXL.X/lcd.h
+[v _Lcd_SetBit Lcd_SetBit `(v  1 e 1 0 ]
+"41
+[v _Lcd_Cmd Lcd_Cmd `(v  1 e 1 0 ]
+"50
+[v _Lcd_Clear Lcd_Clear `(v  1 e 1 0 ]
+"56
+[v _Lcd_Set_Cursor Lcd_Set_Cursor `(v  1 e 1 0 ]
+"77
+[v _Lcd_Start Lcd_Start `(v  1 e 1 0 ]
+"95
+[v _Lcd_Print_Char Lcd_Print_Char `(v  1 e 1 0 ]
+"111
+[v _Lcd_Print_String Lcd_Print_String `(v  1 e 1 0 ]
+"17 D:\MicroProcessor\PIC\VXL.X/pwm.h
 [v _configPWM configPWM `(v  1 e 1 0 ]
-"29
+"33
 [v _setPWM setPWM `(v  1 e 1 0 ]
 "5 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\awdiv.c
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 "5 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
+[v i1___awmod __awmod `(i  1 e 2 0 ]
 "10 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "4 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\Umul8.c
@@ -38,32 +48,38 @@
 [v ___eecpymem __eecpymem `(v  1 e 1 0 ]
 "39
 [v ___memcpyee __memcpyee `(v  1 e 1 0 ]
-"30 D:\MicroProcessor\PIC\VXL.X\main.c
-[v _main main `(v  1 e 1 0 ]
-"77
+"28 D:\MicroProcessor\PIC\VXL.X\main.c
+[v _main main `(i  1 e 2 0 ]
+"84
 [v _ISR ISR `II(v  1 e 1 0 ]
-"88
+"94
 [v _setPumpValue setPumpValue `(v  1 e 1 0 ]
-"16 D:\MicroProcessor\PIC\VXL.X/dht11.h
+"22 D:\MicroProcessor\PIC\VXL.X/dht11.h
 [v _temp temp `[14]uc  1 e 14 0 ]
-"17
+"23
 [v _humi humi `[14]uc  1 e 14 0 ]
-"19
+"25
 [v _t_byte1 t_byte1 `uc  1 e 1 0 ]
 [v _t_byte2 t_byte2 `uc  1 e 1 0 ]
-"20
+"26
 [v _rh_byte1 rh_byte1 `uc  1 e 1 0 ]
 [v _rh_byte2 rh_byte2 `uc  1 e 1 0 ]
-"21
+"27
 [v _check_sum check_sum `uc  1 e 1 0 ]
-"340 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h
-[v _PORTD PORTD `VEuc  1 e 1 @8 ]
-"892
+"892 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\pic\include\proc\pic16f877a.h
 [v _CCPR1L CCPR1L `VEuc  1 e 1 @21 ]
+"1152
+[v _ADRESH ADRESH `VEuc  1 e 1 @30 ]
+"1159
+[v _ADCON0 ADCON0 `VEuc  1 e 1 @31 ]
 "1499
 [v _TRISD TRISD `VEuc  1 e 1 @136 ]
 "1816
 [v _PR2 PR2 `VEuc  1 e 1 @146 ]
+"2222
+[v _ADRESL ADRESL `VEuc  1 e 1 @158 ]
+"2229
+[v _ADCON1 ADCON1 `VEuc  1 e 1 @159 ]
 "2446
 [v _CCP1M2 CCP1M2 `VEb  1 e 0 @186 ]
 "2449
@@ -72,8 +88,16 @@
 [v _CCP1X CCP1X `VEb  1 e 0 @189 ]
 "2455
 [v _CCP1Y CCP1Y `VEb  1 e 0 @188 ]
+"2482
+[v _CHS0 CHS0 `VEb  1 e 0 @251 ]
+"2485
+[v _CHS1 CHS1 `VEb  1 e 0 @252 ]
+"2488
+[v _CHS2 CHS2 `VEb  1 e 0 @253 ]
 "2569
 [v _GIE GIE `VEb  1 e 0 @95 ]
+"2575
+[v _GO_DONE GO_DONE `VEb  1 e 0 @250 ]
 "2599
 [v _INTE INTE `VEb  1 e 0 @92 ]
 "2602
@@ -82,6 +106,20 @@
 [v _INTF INTF `VEb  1 e 0 @89 ]
 "2686
 [v _RB4 RB4 `VEb  1 e 0 @52 ]
+"2752
+[v _RD1 RD1 `VEb  1 e 0 @65 ]
+"2755
+[v _RD2 RD2 `VEb  1 e 0 @66 ]
+"2758
+[v _RD3 RD3 `VEb  1 e 0 @67 ]
+"2761
+[v _RD4 RD4 `VEb  1 e 0 @68 ]
+"2764
+[v _RD5 RD5 `VEb  1 e 0 @69 ]
+"2767
+[v _RD6 RD6 `VEb  1 e 0 @70 ]
+"2770
+[v _RD7 RD7 `VEb  1 e 0 @71 ]
 "2872
 [v _T2CKPS0 T2CKPS0 `VEb  1 e 0 @144 ]
 "2875
@@ -92,38 +130,38 @@
 [v _TRISB4 TRISB4 `VEb  1 e 0 @1076 ]
 "2965
 [v _TRISC2 TRISC2 `VEb  1 e 0 @1082 ]
-"21 D:\MicroProcessor\PIC\VXL.X\main.c
+"19 D:\MicroProcessor\PIC\VXL.X\main.c
 [v _idea_temp idea_temp `[16]uc  1 e 16 0 ]
-"22
+"20
 [v _idea_humi idea_humi `[16]uc  1 e 16 0 ]
-"26
-[v _status status `b  1 e 0 0 ]
-"30
-[v _main main `(v  1 e 1 0 ]
+"24
+[v _status status `uc  1 e 1 0 ]
+"28
+[v _main main `(i  1 e 2 0 ]
 {
-"74
+"81
 } 0
-"88
+"94
 [v _setPumpValue setPumpValue `(v  1 e 1 0 ]
 {
 [v setPumpValue@r_rh r_rh `uc  1 a 1 wreg ]
-"90
+"96
 [v setPumpValue@delta delta `uc  1 a 1 5 ]
-"88
+"94
 [v setPumpValue@r_rh r_rh `uc  1 a 1 wreg ]
 [v setPumpValue@id_rh id_rh `uc  1 p 1 3 ]
-"90
+"96
 [v setPumpValue@r_rh r_rh `uc  1 a 1 4 ]
-"97
+"103
 } 0
-"29 D:\MicroProcessor\PIC\VXL.X/pwm.h
+"33 D:\MicroProcessor\PIC\VXL.X/pwm.h
 [v _setPWM setPWM `(v  1 e 1 0 ]
 {
 [v setPWM@DC DC `uc  1 a 1 wreg ]
 [v setPWM@DC DC `uc  1 a 1 wreg ]
-"32
-[v setPWM@DC DC `uc  1 a 1 1 ]
 "36
+[v setPWM@DC DC `uc  1 a 1 1 ]
+"40
 } 0
 "4 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\Umul8.c
 [v ___bmul __bmul `(uc  1 e 1 0 ]
@@ -138,47 +176,80 @@
 [v ___bmul@multiplier multiplier `uc  1 a 1 2 ]
 "51
 } 0
-"10 D:\MicroProcessor\PIC\VXL.X/pwm.h
+"17 D:\MicroProcessor\PIC\VXL.X/pwm.h
 [v _configPWM configPWM `(v  1 e 1 0 ]
 {
-"24
+"31
 } 0
-"79 D:\MicroProcessor\PIC\VXL.X/lcd.h
-[v _LcdMsgPrint LcdMsgPrint `(v  1 e 1 0 ]
+"77 D:\MicroProcessor\PIC\VXL.X/lcd.h
+[v _Lcd_Start Lcd_Start `(v  1 e 1 0 ]
 {
-"81
-[v LcdMsgPrint@i i `uc  1 a 1 5 ]
-"79
-[v LcdMsgPrint@msg msg `*.26uc  1 p 2 3 ]
-"85
+"93
 } 0
-"61
-[v _LcdDataWrite LcdDataWrite `(v  1 e 1 0 ]
+"56
+[v _Lcd_Set_Cursor Lcd_Set_Cursor `(v  1 e 1 0 ]
 {
-[v LcdDataWrite@data data `uc  1 a 1 wreg ]
-[v LcdDataWrite@data data `uc  1 a 1 wreg ]
-"63
-[v LcdDataWrite@data data `uc  1 a 1 2 ]
-"76
+[v Lcd_Set_Cursor@a a `uc  1 a 1 wreg ]
+"58
+[v Lcd_Set_Cursor@temp temp `uc  1 a 1 9 ]
+[v Lcd_Set_Cursor@y y `uc  1 a 1 8 ]
+[v Lcd_Set_Cursor@z z `uc  1 a 1 7 ]
+"56
+[v Lcd_Set_Cursor@a a `uc  1 a 1 wreg ]
+[v Lcd_Set_Cursor@b b `uc  1 p 1 4 ]
+"59
+[v Lcd_Set_Cursor@a a `uc  1 a 1 6 ]
+"75
+} 0
+"111
+[v _Lcd_Print_String Lcd_Print_String `(v  1 e 1 0 ]
+{
+"113
+[v Lcd_Print_String@i i `i  1 a 2 12 ]
+"111
+[v Lcd_Print_String@a a `*.26uc  1 p 2 7 ]
+"116
+} 0
+"95
+[v _Lcd_Print_Char Lcd_Print_Char `(v  1 e 1 0 ]
+{
+[v Lcd_Print_Char@data data `uc  1 a 1 wreg ]
+"97
+[v Lcd_Print_Char@Upper_Nibble Upper_Nibble `uc  1 a 1 5 ]
+[v Lcd_Print_Char@Lower_Nibble Lower_Nibble `uc  1 a 1 4 ]
+"95
+[v Lcd_Print_Char@data data `uc  1 a 1 wreg ]
+"98
+[v Lcd_Print_Char@data data `uc  1 a 1 6 ]
+"109
 } 0
 "50
-[v _LcdInit LcdInit `(v  1 e 1 0 ]
+[v _Lcd_Clear Lcd_Clear `(v  1 e 1 0 ]
 {
-"57
+"54
 } 0
-"32
-[v _LcdCmdWrite LcdCmdWrite `(v  1 e 1 0 ]
+"41
+[v _Lcd_Cmd Lcd_Cmd `(v  1 e 1 0 ]
 {
-[v LcdCmdWrite@cmd cmd `uc  1 a 1 wreg ]
-[v LcdCmdWrite@cmd cmd `uc  1 a 1 wreg ]
-"34
-[v LcdCmdWrite@cmd cmd `uc  1 a 1 2 ]
-"47
+[v Lcd_Cmd@a a `uc  1 a 1 wreg ]
+[v Lcd_Cmd@a a `uc  1 a 1 wreg ]
+"43
+[v Lcd_Cmd@a a `uc  1 a 1 3 ]
+"48
 } 0
-"61 D:\MicroProcessor\PIC\VXL.X/dht11.h
+"26
+[v _Lcd_SetBit Lcd_SetBit `(v  1 e 1 0 ]
+{
+[v Lcd_SetBit@data_bit data_bit `uc  1 a 1 wreg ]
+[v Lcd_SetBit@data_bit data_bit `uc  1 a 1 wreg ]
+"28
+[v Lcd_SetBit@data_bit data_bit `uc  1 a 1 0 ]
+"39
+} 0
+"67 D:\MicroProcessor\PIC\VXL.X/dht11.h
 [v _DhtUpdateData DhtUpdateData `(b  1 e 0 0 ]
 {
-"85
+"91
 } 0
 "5 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\awmod.c
 [v ___awmod __awmod `(i  1 e 2 0 ]
@@ -195,44 +266,60 @@
 [v ___awdiv __awdiv `(i  1 e 2 0 ]
 {
 "10
-[v ___awdiv@quotient quotient `i  1 a 2 6 ]
+[v ___awdiv@quotient quotient `i  1 a 2 12 ]
 "11
-[v ___awdiv@sign sign `uc  1 a 1 5 ]
-[v ___awdiv@counter counter `uc  1 a 1 4 ]
+[v ___awdiv@sign sign `uc  1 a 1 11 ]
+[v ___awdiv@counter counter `uc  1 a 1 10 ]
 "5
-[v ___awdiv@divisor divisor `i  1 p 2 0 ]
-[v ___awdiv@dividend dividend `i  1 p 2 2 ]
+[v ___awdiv@divisor divisor `i  1 p 2 6 ]
+[v ___awdiv@dividend dividend `i  1 p 2 8 ]
 "41
 } 0
-"24 D:\MicroProcessor\PIC\VXL.X/dht11.h
+"30 D:\MicroProcessor\PIC\VXL.X/dht11.h
 [v _DhtStartSignal DhtStartSignal `(v  1 e 1 0 ]
 {
-"33
+"39
 } 0
-"44
+"50
 [v _DhtReadData DhtReadData `(uc  1 e 1 0 ]
 {
-"46
+"52
 [v DhtReadData@data data `uc  1 a 1 3 ]
 [v DhtReadData@i i `uc  1 a 1 2 ]
-"58
+"64
 } 0
-"36
+"42
 [v _DhtCheckResponse DhtCheckResponse `(v  1 e 1 0 ]
 {
-"41
+"47
 } 0
-"77 D:\MicroProcessor\PIC\VXL.X\main.c
+"27 D:\MicroProcessor\PIC\VXL.X/adc.h
+[v _ADC_Read ADC_Read `(i  1 e 2 0 ]
+{
+"47
+[v ADC_Read@result result `i  1 a 2 4 ]
+"27
+[v ADC_Read@ADC_channel ADC_channel `i  1 p 2 0 ]
+"49
+} 0
+"21
+[v _ADC_Init ADC_Init `(v  1 e 1 0 ]
+{
+"25
+} 0
+"84 D:\MicroProcessor\PIC\VXL.X\main.c
 [v _ISR ISR `II(v  1 e 1 0 ]
 {
-"85
+"91
 } 0
-"32 D:\MicroProcessor\PIC\VXL.X/lcd.h
-[v i1_LcdCmdWrite LcdCmdWrite `(v  1 e 1 0 ]
+"5 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\awmod.c
+[v i1___awmod __awmod `(i  1 e 2 0 ]
 {
-[v i1LcdCmdWrite@cmd cmd `uc  1 a 1 wreg ]
-[v i1LcdCmdWrite@cmd cmd `uc  1 a 1 wreg ]
+"10
+[v i1___awmod@sign sign `uc  1 a 1 5 ]
+[v i1___awmod@counter counter `uc  1 a 1 4 ]
+"5
+[v i1___awmod@divisor divisor `i  1 p 2 0 ]
+[v i1___awmod@dividend dividend `i  1 p 2 2 ]
 "34
-[v i1LcdCmdWrite@cmd cmd `uc  1 a 1 2 ]
-"47
 } 0
